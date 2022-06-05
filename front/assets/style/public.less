@@ -1,0 +1,123 @@
+* {
+	cursor: url('/cursor.png'), auto;
+}
+
+html {
+	background-image: url('/background-image.png');
+}
+
+.icon,
+.sprite,
+.iconfont {
+	display: inline-block;
+	font-size: 20px;
+	color: @font;
+
+	&:hover {
+		cursor: pointer;
+		color: @link;
+	}
+}
+
+//居中容器
+.js2-center-wrap {
+	margin: 0 auto;
+	width: 100%;
+
+	&.w1920 {
+		max-width: 1920px;
+	}
+
+	&.w1280 {
+		max-width: 1280px;
+	}
+
+	&.w1200 {
+		max-width: 1200px;
+	}
+
+	&.w1024 {
+		max-width: 1024px;
+	}
+
+	&.w960 {
+		max-width: 960px;
+	}
+
+	&.w828 {
+		max-width: 828px;
+	}
+}
+
+//区域标题
+.js2-section-title {
+	padding-bottom: 1em;
+
+	.title {
+		font-size: 2.25em;
+		font-weight: bold;
+	}
+
+	.desc {
+		font-size: 1.75em;
+		line-height: 1.5;
+	}
+}
+
+//字体图标
+.dashicons {}
+
+//文章列表
+.post-list{
+
+}
+
+//文章项
+.post {
+	border-bottom: 1px solid @line;
+	margin-top:2em;
+	footer{
+		margin-top:1.5em;
+		display: flex;
+		justify-content: space-between;
+		padding-bottom:.5em;
+	}
+	p{
+		text-indent:2em;
+	}
+}
+
+//链接样式
+.js2-link{
+	&:hover{
+		color:@link;
+		cursor:pointer;
+	}
+}
+
+//
+.highlight-text{
+	font-weight: bold;
+}
+
+.center-box{
+	display: inline-block;
+	margin:0 auto;
+	position:relative;
+	left:50%;
+	transform: translateX(-50%);
+	&>div{
+		margin-bottom:1em;
+	}
+	.item-title {
+		display: inline-block;
+		min-width: 5em;
+	}
+}
+
+.align-right{
+	text-align:right;
+}
+.align-center{
+	text-align:center;
+}

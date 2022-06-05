@@ -1,0 +1,41 @@
+<div class="p-login">
+	<div class="container js2-center-wrap w828">
+		<form class="user-from" method="POST" onsubmit="submitBefore()">
+			<label>
+				<span class="title">
+					<span class="required">*</span>用户名：
+				</span>
+				<input type="text" name="username" placeholder="请输入用户名" value="{$username}" />
+			</label>
+			<label>
+				<span class="title">
+					<span class="required">*</span>密码：
+				</span>
+				<input type="password" name="password" placeholder="请输入密码" value="{$password}" />
+			</label>
+			<div class="bottom">
+				<div class="error-message">{$message}</div>
+				<input class="js2-btn" type="submit" value="登录" />
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+const username = document.querySelector('input[name=username]')
+const password = document.querySelector('input[name=password]')
+
+function submitBefore() {
+	event.preventDefault()
+	if (!username.value) {
+		return Toastify({
+			text: "请输入用户名",
+		}).showToast()
+	}
+	if (!password.value) {
+		return Toastify({
+			text: "请输入密码",
+		}).showToast()
+	}
+	event.target.submit()
+}
+</script>

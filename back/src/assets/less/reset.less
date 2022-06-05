@@ -1,0 +1,133 @@
+* {
+	box-sizing: border-box;
+	word-break: break-all;
+}
+
+html,
+body {
+	color: @font;
+	font: 14px/1 @font-family;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+h4 {
+	font-size: 1rem;
+}
+
+h5 {
+	font-size: .75rem;
+}
+
+h6 {
+	font-size: .5rem;
+}
+
+img {
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
+	object-fit: scale-down;
+}
+
+
+a {
+	color: @font;
+	text-decoration: none;
+
+	&:hover {
+		color: @warn;
+	}
+}
+
+/*表单元素*/
+label,
+textarea {
+	display: block;
+}
+
+textarea {
+	width: 100%;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea,
+button,
+select {
+	color: @font;
+	font-size: 1rem;
+	font-family: @font-family;
+	outline: none;
+	border: 1px solid @border;
+	line-height: 30px;
+	padding: 0 .5em;
+	margin: 0;
+	vertical-align: middle;
+}
+
+input[type="checkbox"] {
+	margin-right: 5px;
+}
+
+input[type="reset"],
+input[type="submit"],
+input[type="button"],
+button {
+	cursor: pointer;
+	padding: 0 .5em;
+	line-height: 30px;
+	background-color: @link;
+	color: #FFF;
+	vertical-align: middle;
+
+	&:hover {
+		opacity: .8;
+	}
+}
+
+::placeholder {
+	color: @font-second;
+	font-family: @font-family;
+}
+
+select {
+	border-color: @bg-second;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+fieldset {
+	border: 1px solid @bg-second;
+}

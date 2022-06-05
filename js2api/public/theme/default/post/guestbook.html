@@ -1,0 +1,57 @@
+<div class="p-guestbook">
+	<div class="container js2-center-wrap w1152">
+		<div class="content">
+			{$post['content']|raw}
+		</div>
+		<div class="form">
+			<div class="contact-input">
+				<label>姓名<span class="required">*</span>：<input class="input-name" type="text"></label>
+				<label>邮箱<span class="required">*</span>：<input class="input-email" type="text"></label>
+				<label>电话<span class="required">*</span>：<input class="input-phone" type="text"></label>
+			</div>
+			<div>留言内容<span class="required">*</span>：</div>
+			<textarea class="input-content" rows="3"></textarea>
+			<div class="btn"><button class="js2-btn" onclick="guestbookSubmit()">提交留言</button></div>
+		</div>
+		{include file='components/aside'}
+	</div>
+</div>
+<script>
+function guestbookSubmit() {
+	const btn = event.target
+	btn.setAttribute('disabled', true) //防止重复提交
+	const name = document.querySelector('.input-name')
+	const email = document.querySelector('.input-email')
+	const phone = document.querySelector('.input-phone')
+	const content = document.querySelector('.input-content')
+	if (!name.value || !email.value || !phone.value || !content.value) {
+		confirm('请输入联系方式和留言内容！')
+		btn.removeAttribute('disabled')
+		return
+	}
+	const data = {
+		name: name.value,
+		email: email.value,
+		phone: phone.value,
+		content: content.value
+	}
+	fetch('/js2-json/v1/guestbook/add', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data),
+	}).then(response => response.json()).then(data => {
+		if (data.code == 200) {
+			confirm('留言提交成功')
+			name.value = email.value = phone.value = content.value = ''
+		} else {
+			confirm(data.msg)
+		}
+		btn.removeAttribute('disabled')
+	}).catch(() => {
+		confirm('网络错误请稍后再试！')
+		btn.removeAttribute('disabled')
+	})
+}
+</script>

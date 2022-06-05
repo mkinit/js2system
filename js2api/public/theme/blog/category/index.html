@@ -1,0 +1,33 @@
+<div class="p-category">
+	<div class="wrap js2-center-wrap w828">
+		<div class="category-children">
+			当前分类：{$category['name']}
+			{if(count($category_child))}
+			，子分类：
+			{foreach ($category_child as $category)}
+			<a href="/category/{$category['id']}">{$category['name']}</a>
+			{/foreach}
+			{/if}
+		</div>
+		<ul class="post-list latest">
+			{foreach ($posts as $post)}
+				<li>
+					<a class="title" href="/post/{$post['id']}.html">{$post['title']}</a>
+					<div class="summary">{$post['content']|mb_substr=0,280}……</div>
+					<div class="post-info">
+						<span class="date"><span class="dashicons dashicons-calendar-alt"></span>{$post['time_add']}</span>
+						{if(count($post['tags']))}
+						<span class="tags">
+							{foreach $post['tags'] as $tag}
+							<a href="/tag/{$tag['id']}">{$tag['name']}</a>
+							{/foreach}
+						</span>
+						{/if}
+						<span class="category"><span class="dashicons dashicons-category"></span><a href="/category/{$post['category']['id']}">{$post['category']['name']}</a></span>
+					</div>
+				</li>
+			{/foreach}
+		</ul>
+		{$page|raw}
+	</div>
+</div>

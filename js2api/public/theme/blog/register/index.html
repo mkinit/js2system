@@ -1,0 +1,130 @@
+<div class="p-register">
+	<div class="container js2-center-wrap w828">
+		<form class="user-from" method="POST" onsubmit="submitBefore()">
+			<label class="label-email">
+				<span class="title">
+					<span class="required">*</span>电子邮箱：
+				</span>
+				<input type="text" name="email" placeholder="请输入电子邮箱" value="{$email}" />
+				<button type="button" class="js2-btn verify-code-btn">获取验证码</button>
+			</label>
+			<label>
+				<span class="title">
+					<span class="required">*</span>验证码：
+				</span>
+				<input type="text" name="verify_code" placeholder="请输入验证码" value="{$verify_code}" />
+			</label>
+			<label>
+				<span class="title">
+					<span class="required">*</span>用户名：
+				</span>
+				<input type="text" name="username" placeholder="请输入用户名" value="{$username}" />
+			</label>
+			<label>
+				<span class="title">
+					<span class="required">*</span>密码：
+				</span>
+				<input type="password" name="password" placeholder="请输入密码" value="{$password}" />
+			</label>
+			<label>
+				<span class="title">
+					<span class="required">*</span>确认密码：
+				</span>
+				<input type="password" name="password-confirm" placeholder="请再次输入密码" value="{$password}" />
+			</label>
+			<div class="bottom">
+				<div class="error-message">{$message}</div>
+				<input class="js2-btn" type="submit" value="注册" />
+				<a href="login">去登录</a>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+const email = document.querySelector('input[name=email]')
+const verify_code = document.querySelector('input[name=verify_code]')
+const username = document.querySelector('input[name=username]')
+const password = document.querySelector('input[name=password]')
+const password_confirm = document.querySelector('input[name=password-confirm]')
+
+const verify_code_btn = document.querySelector('.verify-code-btn')
+const verify_code_btn_text = verify_code_btn.innerText
+
+verify_code_btn.addEventListener('click', () => {
+	if (!email.value) {
+		return Toastify({
+			text: "请输入电子邮箱",
+		}).showToast()
+	}
+	const target = event.target
+	clearInterval(timer)
+	var timer = null
+	target.setAttribute('disabled', true)
+	Toastify({
+		text: '正在发送验证码',
+	}).showToast()
+	fetch('/js2-json/v1/mail/verify-code?email=' + email.value, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(response => response.json()).then(data => {
+		if (data.code == 200) {
+			Toastify({
+				text: '验证码发送成功',
+			}).showToast()
+
+		} else {
+			Toastify({
+				text: data.msg,
+			}).showToast()
+		}
+
+		let second = 60
+		timer = setInterval(() => {
+			second--
+			target.innerText = second + 's'
+			if (second <= 0) {
+				clearInterval(timer)
+				target.innerText = verify_code_btn_text
+				target.removeAttribute('disabled')
+			}
+		}, 1000)
+	})
+})
+
+function submitBefore(){
+	event.preventDefault()
+	if (!email.value) {
+		return Toastify({
+			text: "请输入电子邮箱",
+		}).showToast()
+	}
+	if (!verify_code.value) {
+		return Toastify({
+			text: "请输入验证码",
+		}).showToast()
+	}
+	if (!username.value) {
+		return Toastify({
+			text: "请输入用户名",
+		}).showToast()
+	}
+	if (!password.value) {
+		return Toastify({
+			text: "请输入密码",
+		}).showToast()
+	}
+	if (!password_confirm.value) {
+		return Toastify({
+			text: "请再次输入密码确认",
+		}).showToast()
+	}
+	if(password.value!==password_confirm.value){
+		return Toastify({
+			text: "两次输入的密码不一致",
+		}).showToast()
+	}
+	event.target.submit()
+}
+</script>

@@ -1,0 +1,26 @@
+<div class="p-index">
+	<div class="container js2-center-wrap w828">
+		<ul class="post-list latest">
+			{foreach $posts as $post}
+			<li>
+				<a class="title" href="/post/{$post['id']}.html">{$post['title']}</a>
+				<div class="summary">{$post['content']|mb_substr=0,160}……</div>
+				<div class="post-info">
+					<span class="date"><span class="dashicons dashicons-calendar-alt"></span>{$post['time_add']}</span>
+					{if(!empty($post['tags']))}
+					<span class="tags">
+						{foreach $post['tags'] as $tag}
+						<a href="/tag/{$tag['id']}">{$tag['name']}</a>
+						{/foreach}
+					</span>
+					{/if}
+					{if($post['category'])}
+					<span class="category"><span class="dashicons dashicons-category"></span><a href="/category/{$post['category']['id']}">{$post['category']['name']}</a></span>
+					{/if}
+				</div>
+			</li>
+			{/foreach}
+		</ul>
+		{$page|raw}
+	</div>
+</div>

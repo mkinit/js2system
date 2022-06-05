@@ -1,0 +1,126 @@
+@import url('@/assets/less/reset.less'); //初始化
+@import url('@/assets/less/public.less'); //公共样式
+
+/*覆盖element-ui*/
+.el-message {
+	min-width: unset;
+}
+
+//模态框内容元素
+.el-dialog__body {
+	padding: 20px 40px;
+}
+
+//菜单收起时的二级目录容器宽度
+.el-menu--popup {
+	min-width: unset;
+}
+
+//菜单收起时的菜单名提示
+.el-tooltip__popper {
+	position: absolute;
+	border-radius: 4px;
+	padding: 10px;
+	z-index: 2000;
+	font-size: 12px;
+	line-height: 1.2;
+	min-width: 10px;
+	word-wrap: break-word;
+}
+
+.el-tooltip__popper .popper__arrow,
+.el-tooltip__popper .popper__arrow::after {
+	position: absolute;
+	display: block;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+}
+
+.el-tooltip__popper .popper__arrow {
+	border-width: 6px;
+}
+
+.el-tooltip__popper .popper__arrow::after {
+	content: ' ';
+	border-width: 5px;
+}
+
+.el-tooltip__popper[x-placement^='right'] {
+	margin-left: 12px;
+}
+
+.el-tooltip__popper[x-placement^='right'] .popper__arrow {
+	left: -6px;
+	border-right-color: #303133;
+	border-left-width: 0;
+}
+
+.el-tooltip__popper[x-placement^='right'] .popper__arrow::after {
+	bottom: -5px;
+	left: 1px;
+	border-right-color: #303133;
+	border-left-width: 0;
+}
+
+.el-tooltip__popper.is-dark {
+	background: #303133;
+	color: #fff;
+}
+
+//菜单行高
+.el-submenu {
+	.el-menu-item {
+		line-height: 30px;
+		height: 30px;
+		margin-left:-.5em;
+	}
+}
+
+//菜单项和标题
+.el-menu-item,
+.el-submenu__title {
+	line-height: 35px;
+	height: 35px;
+	i{
+		color: @bg;
+	}
+	i[class^=el-icon-]{
+		margin-left:-.5em;
+	}
+	&>span {
+		display: inline-block;
+		min-width: 4em;
+		text-align:left;
+	}
+}
+
+//菜单展开图标
+.el-submenu__icon-arrow{
+	margin-top:-5px;
+}
+
+//表格
+
+.el-table {
+	thead {
+		color: @font;
+	}
+
+	.cell {
+		line-height: 1.375;
+	}
+	 td{
+		padding:1em 0;
+	}
+
+}
+
+.el-table--mini,
+.el-table--small,
+.el-table__expand-icon {
+	font-size: 14px;
+}
+
+/*覆盖element-ui结束*/

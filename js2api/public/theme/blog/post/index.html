@@ -1,0 +1,167 @@
+<div class="p-post">
+	<div class="container js2-center-wrap w828">
+		<div class="post-list latest">
+			<h2 class="title">{$post['title']}</h2>
+			<div class="post-info">
+				<span class="date"><span class="dashicons dashicons-calendar-alt"></span>{$post['time_add']}</span>
+				{if(!empty($post['category']))}
+				<span class="category"><span class="dashicons dashicons-category"></span><a href="/category/{$post['category']['id']}">{$post['category']['name']}</a></span>
+				{/if}
+			</div>
+			<div class="content">{$post['content']|raw}</div>
+		</div>
+		<div class="reply-box">
+			<div class="reply-form form">
+				<h3 class="form-title">发送一条评论：</h3>
+				<input type="hidden" name="post_id" value="{$post['id']}" />
+				<input type="hidden" name="parent_id" value="0" />
+				<input type="hidden" name="reply_to_id" value="0" />
+				{if($user)}
+				<label>您好，{$user['nickname']}</label>
+				<input type="hidden" name="nickname" value="{$user['nickname']}" />
+				<input type="hidden" name="email" value="{$user['email']}" />
+				{else}
+				<label><span class="label-title">昵称：</span><input type="text" name="nickname" /></label>
+				<label><span class="label-title">电子邮箱：</span><input type="text" name="email" /></label>
+				{/if}
+				<label><textarea name="content" rows="5"></textarea></label>
+				<button class="js2-btn" onclick="submit()">提交评论</button>
+			</div>
+		</div>
+		{if(!empty($comments))}
+		<div class="comments">
+			<h3>评论列表：</h3>
+			<ul>
+				{foreach $comments as $parent}
+				<li id="comment-{$parent['id']}">
+					<div class="comment-top">
+						<span class="nickname">{$parent['user_id']?$parent['author']['nickname']:$parent['nickname']} 说：</span>
+					</div>
+					<div class="comment-content">
+						{$parent['content']}
+					</div>
+					<div class="comment-bottom">
+						<span class="date">
+							{$parent['time_add']}
+							<span class="reply" onclick="reply('#comment-{$parent['id']} .comment-bottom',{$parent['id']},{$parent['id']})">回复</span>
+							<span class="reply cancel" onclick="replyCancel()">取消回复</span>
+						</span>
+					</div>
+					{if(!empty($parent['children']))}
+					<ul>
+						{foreach $parent['children'] as $child}
+						<li id="comment-{$child['id']}">
+							<div class="comment-top">
+								<span class="nickname">{$child['user_id']?$child['author']['nickname']:$child['nickname']}</span>
+							</div>
+							<div class="comment-content">
+								@{$child['reply_nickname']}：{$child['content']}
+							</div>
+							<div class="comment-bottom">
+								<span class="date">{$parent['time_add']}</span>
+								<span class="reply" onclick="reply('#comment-{$child['id']} .comment-bottom',{$parent['id']},{$child['id']})">回复</span>
+								<span class="reply cancel" onclick="replyCancel()">取消回复</span>
+							</div>
+						</li>
+						{/foreach}
+					</ul>
+					{/if}
+				</li>
+				{/foreach}
+			</ul>
+		</div>
+		{/if}
+	</div>
+</div>
+<script>
+const reply_box = document.querySelector('.reply-box')
+const reply_form = document.querySelector('.reply-form')
+const post_id = document.querySelector('input[name=post_id]') //文章ID
+const form_parent_id = document.querySelector('input[name=parent_id]') //父级评论ID
+const form_reply_to_id = document.querySelector('input[name=reply_to_id]') //被回复的评论ID
+const nickname = document.querySelector('input[name=nickname]') //昵称
+const email = document.querySelector('input[name=email]') //邮箱
+const content = document.querySelector('textarea[name=content]') //内容
+
+const storage_nickname = localStorage.getItem('nickname')
+const storage_email = localStorage.getItem('email')
+
+{if(!$user)}
+if (storage_nickname) {
+	nickname.value = storage_nickname
+	email.value = storage_email
+}
+{/if}
+
+function submit() {
+	const btn = event.target
+	btn.setAttribute('disabled', true) //防止重复提交
+	if (!nickname.value || !email.value || !content.value) {
+		Toastify({
+			text: '请输入昵称、邮箱和留言内容！',
+		}).showToast()
+		btn.removeAttribute('disabled')
+		return
+	}
+	//昵称邮箱保存到本地
+	localStorage.setItem('nickname', nickname.value)
+	localStorage.setItem('email', email.value)
+
+	Toastify({
+		text: '正在提交留言……',
+	}).showToast()
+	const data = {
+		post_id: post_id.value,
+		parent_id: form_parent_id.value,
+		reply_to_id: form_reply_to_id.value,
+		nickname: nickname.value,
+		email: email.value,
+		content: content.value
+	}
+	fetch('/js2-json/v1/comments/add', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data),
+	}).then(response => response.json()).then(data => {
+		if (data.code == 200) {
+			Toastify({
+				text: '留言提交成功',
+			}).showToast()
+			setTimeout(() => {
+				location.reload()
+			}, 1000)
+		} else {
+			Toastify({
+				text: data.msg,
+			}).showToast()
+		}
+		btn.removeAttribute('disabled')
+	})
+}
+
+/*
+	回复评论
+	insert_target：评论表单要插入的位置
+	parent_id：父级评论ID
+	reply_to_id：被回复评论ID
+*/
+function reply(insert_target, parent_id, reply_to_id) {
+	form_parent_id.value = parent_id
+	form_reply_to_id.value = reply_to_id
+	const target = document.querySelector(insert_target)
+	target.appendChild(reply_form)
+	event.target.style.display = 'none'
+	event.target.parentNode.querySelector('.reply.cancel').style.display = 'inline-block'
+}
+
+function replyCancel() {
+	form_parent_id.value = 0
+	form_reply_to_id.value = 0
+	reply_box.appendChild(reply_form)
+
+	event.target.style.display = 'none'
+	event.target.parentNode.querySelector('.reply').style.display = 'inline-block'
+}
+</script>

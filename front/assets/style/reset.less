@@ -1,0 +1,153 @@
+* {
+	box-sizing: border-box;
+	word-break: break-all;
+}
+
+html,
+body {
+	color: @font;
+	font: 15px/1 @font-family;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0 0 .5em;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+h4 {
+	font-size: 1rem;
+}
+
+h5 {
+	font-size: .75rem;
+}
+
+h6 {
+	font-size: .5rem;
+}
+
+img {
+	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
+	object-fit: scale-down;
+}
+
+
+a {
+	color: @font;
+	text-decoration: none;
+
+	&:hover {
+		color: @link;
+	}
+}
+
+/*表单元素*/
+label,
+textarea {
+	display: block;
+}
+
+textarea {
+	width: 100%;
+	color: @font;
+	font-size: 1rem;
+	font-family: @font-family;
+	outline: none;
+	border: 1px solid @font-light;
+	line-height: 1.5;
+	padding: .5em;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+button,
+select {
+	color: @font;
+	font-size: 1rem;
+	font-family: @font-family;
+	outline: none;
+	border: 1px solid @font-light;
+	line-height: 30px;
+	padding: 0 .5em;
+	margin: 0;
+	vertical-align: middle;
+}
+
+input[type="checkbox"] {
+	margin-right: 5px;
+}
+
+input[type="reset"],
+input[type="submit"],
+input[type="button"],
+button {
+	cursor: pointer;
+	padding: 0 1em;
+	line-height: 32px;
+	background-color: @link;
+	color: #FFF;
+	border:none;
+	outline: none;
+	min-width: 6em;
+	text-align:center;
+	&:hover {
+		opacity: .8;
+	}
+}
+
+::placeholder {
+	color: @font-light;
+	font-family: @font-family;
+}
+
+select {
+	border-color: @font-light;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+fieldset {
+	border: 1px solid @font-light;
+}
+
+/* 表格 */
+table {
+	background-color: @font-light;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+th,
+td {
+	border: 1px solid @font;
+}

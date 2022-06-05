@@ -1,0 +1,79 @@
+<div class="p-guestbook">
+	<div class="container js2-center-wrap w828">
+		<div class="post-list latest">
+			<h2 class="title">{$post['title']}</h2>
+			<div class="post-info">
+				<span class="date"><span class="dashicons dashicons-calendar-alt"></span>{$post['time_add']}</span>
+				{if(!empty($post['category']))}
+				<span class="category"><span class="dashicons dashicons-category"></span><a href="/category/$post['category']['id']">{$post['category']['name']}</a></span>
+				{/if}
+			</div>
+			<div class="content">{$post['content']|raw}</div>
+		</div>
+		<div class="reply-box">
+			<div class="form">
+				<label><span class="label-title">昵称：</span><input type="text" name="nickname" /></label>
+				<label><span class="label-title">电子邮箱：</span><input type="text" name="email" /></label>
+				<label><textarea name="content" rows="5"></textarea></label>
+				<div class="btn"><button class="js2-btn" onclick="guestbookSubmit()">提交留言</button></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+const nickname = document.querySelector('input[name=nickname]')//昵称
+const email = document.querySelector('input[name=email]')//邮箱
+const content = document.querySelector('textarea[name=content]')//内容
+
+const storage_nickname = localStorage.getItem('nickname')
+const storage_email = localStorage.getItem('email')
+if(storage_nickname){
+	nickname.value = storage_nickname
+	email.value = storage_email
+}
+
+function guestbookSubmit() {
+	const btn = event.target
+	btn.setAttribute('disabled', true) //防止重复提交
+	if (!nickname.value || !email.value || !content.value) {
+		Toastify({
+			text: '请输入昵称、邮箱和留言内容！',
+		}).showToast()
+		btn.removeAttribute('disabled')
+		return
+	}
+	//昵称邮箱保存到本地
+	localStorage.setItem('nickname',nickname.value)
+	localStorage.setItem('email',email.value)
+
+	Toastify({
+		text: '正在提交留言……',
+	}).showToast()
+	const data = {
+		name: nickname.value,
+		email: email.value,
+		content: content.value
+	}
+	fetch('/js2-json/v1/guestbook/add', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data),
+	}).then(response => response.json()).then(data => {
+		if (data.code == 200) {
+			Toastify({
+				text: '留言提交成功',
+			}).showToast()
+			setTimeout(() => {
+				location.reload()
+			}, 1000)
+		} else {
+			Toastify({
+				text: data.msg,
+			}).showToast()
+		}
+		btn.removeAttribute('disabled')
+	})
+}
+</script>

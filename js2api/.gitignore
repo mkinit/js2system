@@ -1,0 +1,9 @@
+.env
+vendor/
+runtime/
+public/upload/
+public/admin/
+public/theme/company/
+public/theme/md5.txt
+config/key.php
+

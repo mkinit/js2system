@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans-CN">
+
+<head>
+	{if !empty($setting['ba'])}
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?{$setting['ba']}";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	{/if}
+	<meta charset="utf-8" />
+	<title>{$title?$title:$setting['site_title']} - {$setting['site_name']}</title>
+	<meta content="{$keywords?$keywords:$setting['site_keywords']}" name="keywords" />
+	<meta content="{$description?$description:$setting['site_description']}" name="description" />
+	<meta content="webkit" name="renderer" />
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+	<meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport" />
+	<link href="/favicon.png" rel="icon" type="image/png" />
+	<link rel="stylesheet/less" type="text/css" href="__style__/style.less?{System:version}">
+	<script src="__static__/library/less-v3.11.1.min.js"></script>
+	<script src="__static__/library/qrcode.min.js"></script>
+	<script src="__static__/library/prism.js"></script>
+</head>
+
+<body class="{$controller_action}">
+	<div class="js2-center-wrap w1920">
+		<header>
+			<div class="container js2-center-wrap w1152">
+				<div class="top">
+					<div class="logo">
+						<a href="/"><img src="{$setting['logo']}" /></a>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main>{__CONTENT__}</main>
+		<footer>
+			<div class="container js2-center-wrap w1152">
+				<div class="links">
+					<ul>
+						<li>友情链接：</li>
+						{foreach $links as $link}
+						<li><a target="_blank" href="{$link['link']}">{$link['name']}</a></li>
+						{/foreach}
+					</ul>
+				</div>
+				<div class="copyright">
+					Copyright ©
+					{:date('Y')}
+					版权所有
+					<a href="http://beian.miit.gov.cn/" target="_blank">{$setting['icp']}</a>
+					<a href="http://beian.miit.gov.cn/" target="_blank">{$setting['police']}</a>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<script type="module" src="__js__/main.js"></script>
+</body>
+
+</html>

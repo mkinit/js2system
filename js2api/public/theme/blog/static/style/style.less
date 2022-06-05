@@ -1,0 +1,521 @@
+/*
+	系统基于：js2system
+	自用博客主题
+*/
+
+@import './color/color.less'; //主题配色
+@import '/static/common/style/reset.less'; //初始化样式
+@import '/static/common/style/public.less'; //公共样式
+
+html {
+	background-image: url(/theme/blog/static/images/background-image.png);
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+	white-space: break-spaces;
+}
+
+//菜单
+.c-menu {
+	position: fixed;
+	left: -200px;
+	top: 0;
+	height: 100vh;
+	min-width: 250px;
+	text-align: center;
+	border-right: 1px solid @border;
+	padding: 4em 3.5em;
+	transition: all .3s linear;
+	background-color: #FFF;
+	z-index: 1000;
+	line-height: 2.5;
+
+	&.show {
+		left: 0;
+
+		.close-btn {
+			display: block;
+		}
+
+		.menu-btn {
+			display: none;
+		}
+	}
+
+	.close-btn {
+		display: none;
+	}
+
+	.dashicons {
+		width: 40px;
+		height: 40px;
+		font-size: 40px;
+		cursor: pointer;
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		z-index: 10;
+
+		&:hover {
+			color: @secondary;
+		}
+	}
+
+	.menu-list {
+
+		li {
+			transition: all .1s linear;
+			position: relative;
+
+			&:hover {
+
+				.sub-menu {
+					animation: duang linear 1s;
+					transform: translateX(-50%) scaleY(1);
+				}
+			}
+		}
+
+		a {
+			display: block;
+			transition: all .5s linear;
+			padding: 0 1em;
+		}
+	}
+
+	/*二级菜单*/
+	.sub-menu {
+		min-width: 95%;
+		font-size: .95em;
+		position: absolute;
+		left: 50%;
+		top: 100%;
+		box-shadow: 0 0 5px 0 @font-second;
+		border-radius: 5px;
+		transform: translateX(-50%) scaleY(0);
+		transform-origin: center top;
+		z-index: 10;
+		text-align: center;
+		padding: 1em 0;
+		background-color: #FFF;
+		line-height: 2;
+
+		&::after {
+			content: "";
+			display: block;
+			position: absolute;
+			left: 50%;
+			margin-left: -4px;
+			top: -9px;
+			width: 1px;
+			border-bottom: 8px solid @font-second;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+		}
+
+		li {
+			white-space: nowrap;
+		}
+	}
+
+	@keyframes duang {
+		25% {
+			transform: translateX(-50%) scaleY(.9);
+		}
+
+		45% {
+			transform: translateX(-50%) scaleY(1);
+		}
+
+		60% {
+			transform: translateX(-50%) scaleY(.95);
+		}
+
+		75% {
+			transform: translateX(-50%) scaleY(1);
+		}
+
+		85% {
+			transform: translateX(-50%) scaleY(.98);
+		}
+
+		100% {
+			transform: translateX(-50%) scaleY(1);
+		}
+	}
+}
+
+//顶部
+.c-top {
+	padding: 1.5em 0;
+	border-bottom: 1px solid @bg;
+
+	.top-logo {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.top-user{
+		text-align:right;
+		border-bottom: 1px solid @bg;
+		margin-bottom:.5em;
+		padding-bottom:.5em;
+		font-size:13px;
+		.item{
+			margin:0 .5em;
+		}
+	}
+
+	.logo {
+		display: flex;
+		align-items: center;
+
+		img {
+			max-height: 70px;
+			width: auto;
+			border-radius: 50%;
+		}
+
+		.blog-title {
+			margin-left: 1em;
+			line-height: 1;
+		}
+
+		.blog-name {
+			font-size: 2rem;
+			font-weight: bold;
+
+			a {
+				color: @font;
+
+				&:hover {
+					color: @secondary;
+				}
+			}
+		}
+
+		.blog-description {
+			margin-top: .5em;
+			font-size: 1rem;
+		}
+	}
+}
+
+//底部
+footer {
+	.links {
+		margin-top: 2em;
+
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+
+			li {
+				margin-right: 1.5em;
+			}
+		}
+	}
+
+	.copyright {
+		text-align: center;
+		padding: 2em 0;
+
+		a {
+			display: inline-block;
+		}
+	}
+
+}
+
+//文章列表
+.post-list {
+	.dashicons {
+		margin-right: .25em;
+	}
+
+	li {
+		border-bottom: 1px dashed @border;
+		padding: 1.5em 0;
+	}
+
+	.title {
+		font-size: 1.25em;
+		font-weight: bold;
+	}
+
+	.summary {
+		margin: 1em 0;
+	}
+
+	.post-info {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.tags {
+		a {
+			display: inline-block;
+			background-color: @primary;
+			color: @invert;
+			margin: 0 .25em;
+			padding: 0 .5em;
+			border-radius: 4px;
+			font-size: .875em;
+			line-height: 1.5;
+			min-width: 4em;
+			text-align: center;
+
+			&:hover {
+				background-color: @secondary;
+			}
+		}
+	}
+}
+
+//子分类
+.category-children {
+	padding: 1.5em 0;
+	border-bottom: 1px dashed @border;
+	text-align: center;
+
+	a {
+		display: inline-block;
+		border: 1px solid @primary;
+		padding: 0 1em;
+		margin: 0 .5em;
+		border-radius: 4px;
+		line-height: 2;
+		color: @primary;
+
+		&:hover {
+			background-color: @primary;
+			color: @invert;
+		}
+	}
+}
+
+//搜素页和标签页的头部
+.page-title {
+	color: @primary;
+	text-align: center;
+	font-size: 1.125em;
+	border-bottom: 1px dashed @border;
+	padding: 1em 0;
+}
+
+//分页
+.pagination {
+	margin-top: 2em;
+	display: flex;
+	justify-content: center;
+
+	li {
+		color: @invert;
+		background-color: @primary;
+		line-height: 2;
+		margin: 0 .25em;
+		min-width: 2em;
+		text-align: center;
+
+		&:hover {
+			a {
+				background-color: @secondary;
+			}
+		}
+
+		&.active {
+			span {
+				background-color: @secondary;
+			}
+		}
+
+		&.disabled {
+			span {
+				background-color: @border;
+				color: @font-second;
+			}
+		}
+
+		a,
+		span {
+			display: inline-block;
+			width: 100%;
+			color: @invert;
+			padding: 0 5px;
+		}
+	}
+}
+
+//评论留言页面
+.p-post,
+.p-guestbook {
+	.container {
+		padding-top: 2em;
+	}
+
+	.title {
+		font-size: 1.5em;
+		text-align: center;
+	}
+
+	.content {
+		margin-top: 2em;
+		border-bottom: 1px dashed @border;
+		padding-bottom: 2em;
+
+		p {
+			text-indent: 2em;
+
+			img:first-child {
+				margin-left: -2em;
+			}
+		}
+	}
+
+	.post-info {
+		border-bottom: 1px dashed @border;
+		padding-bottom: .5em;
+		margin-top: 3em;
+	}
+}
+
+
+//评论表单
+.reply-box {
+	margin-top: 2em;
+}
+
+.form {
+	.form-title {
+		color: @secondary;
+	}
+
+	label {
+		margin-bottom: 1em;
+	}
+
+	.label-title {
+		display: inline-block;
+		min-width: 6em;
+	}
+}
+
+//评论列表
+.comments {
+	margin-top: 2em;
+	border-bottom: 1px dashed @border;
+	padding-bottom: 2em;
+
+	.comment-top {
+		color: @font-second;
+
+		.nickname {
+			font-weight: bold;
+			color: @primary;
+			margin-right: 1em;
+		}
+	}
+
+	.comment-content {
+		font-size: 13px;
+		padding: .5em 0;
+	}
+
+	.comment-bottom {
+		font-size: 12px;
+		color: @font-third;
+
+		.date {}
+
+		.reply {
+			cursor: pointer;
+
+			&:hover {
+				color: @primary;
+			}
+
+			&.cancel {
+				display: none;
+			}
+		}
+	}
+
+	li {
+		padding: .5em 0;
+		border-bottom: 1px solid @border;
+
+		li {
+			margin-left: 2em;
+			border-bottom: none;
+			border-top: 1px solid @border;
+			margin-top: .5em;
+			background-color: @bg;
+			padding: .5em;
+		}
+	}
+}
+
+//用户表单
+.user-from {
+	display: inline-block;
+
+	label {
+		margin-bottom: 1em;
+	}
+
+	.title {
+		display: inline-block;
+		min-width: 6em;
+		text-align: right;
+	}
+
+	.required {
+		color: red;
+	}
+
+	.error-message {
+		color: red;
+		font-size: 13px;
+		margin: .5em 0;
+	}
+}
+
+.p-register {
+	.container {
+		text-align: center;
+		padding: 2em 0;
+	}
+
+	label {
+		input[type=text],
+		input[type=password] {
+			width: 280px;
+		}
+		input[name=email] {
+			width: 172px;
+		}
+	}
+
+	.get-verify_code-btn {
+		font-size: 13px;
+	}
+
+}
+
+.p-login{
+	.container {
+		text-align: center;
+		padding: 2em 0;
+	}
+}
+
+.p-user{
+	.user-box{
+		width:50%;
+		margin:2em auto;
+		box-shadow: 0 0 6px @border;
+		padding:1em;
+	}
+}
