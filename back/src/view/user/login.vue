@@ -3,16 +3,16 @@
 		<div class="login-box js2-box">
 			<div class="login-title">JS2-SYSTEM</div>
 			<template v-if="!user">
-				<p>
+				<div class="item">
 					<el-input v-model="username" placeholder="请输入用户名" prefix-icon="el-icon-user"></el-input>
-				</p>
-				<p>
+				</div>
+				<div class="item">
 					<el-input @keyup.enter.native="login" v-model="password" placeholder="请输入密码" prefix-icon="el-icon-key" show-password></el-input>
-				</p>
-				<p class="bototom">
+				</div>
+				<div class="bototom">
 					<el-checkbox v-model="auto_login">自动登录</el-checkbox>
 					<el-button type="primary" class="login-btn" @click="login">登录</el-button>
-				</p>
+				</div>
 			</template>
 			<div class="status js2-text-center" v-else>
 				当前是已登陆状态，<el-button type="primary" @click="logoutConfirm">退出登陆</el-button>
@@ -74,9 +74,13 @@ export default {
 	.login-box {
 		margin: 15vh auto 0;
 		min-width: 320px;
-		max-width:30vw;
+		max-width: 360px;
 		box-shadow: 1px 1px 10px @font-second;
 		padding:1em 2em;
+		.item{
+			margin:.5em auto;
+			width:80%;
+		}
 	}
 
 	.login-title {
