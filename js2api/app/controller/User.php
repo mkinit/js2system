@@ -6,6 +6,12 @@ use think\facade\View;
 
 class User extends BaseController {
 	public function index() {
+
+		//判断是否已经登录
+		if (!$this->user) {
+			return redirect('/login.html');
+		}
+
 		//全局变量赋值
 		View::assign([
 			'title' => '用户中心',
