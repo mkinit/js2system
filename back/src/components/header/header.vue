@@ -10,7 +10,7 @@
 				</span>
 			</div>
 			<div class="right">
-				<span v-if="user">当前用户：<router-link to="/my">{{user.nickname}}</router-link></span>
+				<span v-if="user">当前用户：<router-link to="/my" class="nickname">{{user.nickname}}</router-link></span>
 				<a href="javascript:void(0)" @click="clearCache">清除缓存</a>
 				<a :href="setting_info&&setting_info.site?('https://'+setting_info.site):'/'" target="_blank">浏览网站</a>
 				<a href="javascript:void(0)" class="logout-btn" @click="logoutConfirm">
@@ -85,7 +85,10 @@ export default {
 
 	.right{
 		span,a{
-			margin:1.5em;
+			margin:0 1.5em;
+		}
+		.nickname{
+			margin:0;
 		}
 	}
 
