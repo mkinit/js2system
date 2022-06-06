@@ -252,7 +252,7 @@ export default {
 		border: 1px solid @bg;
 		position: relative;
 		width:150px;
-		height:150px;
+		height:120px;
 		display: flex;
 		justify-content: center;
 		align-items: center;

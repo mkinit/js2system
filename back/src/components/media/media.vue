@@ -20,7 +20,7 @@
 				</el-pagination>
 			</div>
 			<div class="bottom">
-				<el-button type="primary" @click="selectConfirm">确定</el-button>
+				<el-button type="primary" @click="selectConfirm">选好了</el-button>
 			</div>
 		</div>
 	</div>
@@ -132,6 +132,7 @@ export default {
 		margin-top: 1em;
 		max-height: 50vh;
 		overflow-y: auto;
+		padding-bottom: 1em;
 	}
 
 	.file-header {
@@ -151,18 +152,21 @@ export default {
 
 	.file-item {
 		float: left;
-		width: 20%;
-		padding: .5em;
+		width: 150px;
+		height: 120px;
 		text-align: center;
-		border: 1px solid @bg;
+		border: 2px solid @bg;
 		position: relative;
-		opacity: .6;
+		opacity: .8;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin:.25em;
 
-		&.current,&:hover {
+		&.current,
+		&:hover {
 			border-color: @link;
 			opacity: 1;
-			border-width: 1px;
-			box-shadow: 0 0 5px @link;
 		}
 
 		.file-box {
@@ -188,6 +192,7 @@ export default {
 	}
 
 	.bottom {
+		margin-top: 1em;
 		text-align: center;
 	}
 }
