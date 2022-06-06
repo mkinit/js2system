@@ -84,7 +84,6 @@ class Comment extends Api {
 			if (!$parent_id && !$reply_to_id) {
 				//如果不是回复的邮件，通知管理员
 				$result = EmailTool::send(UserModel::find(1)['email'], '来自《' . $this->setting_info['site_name'] . '》 的评论通知', '收到用户的评论：' . $content . '，请登录管理后台查看！');
-				dd($result);
 			} else {
 				//回复的邮件通知被回复的用户，需要定位被回复的用户邮件，评论楼层，网站地址
 				$reply_to_email = CommentModel::where('id', $reply_to_id)->column('email')[0];
