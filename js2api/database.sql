@@ -112,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `js2system_comment` (
   `nickname` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '作者昵称',
   `email` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '作者邮件',
   `link` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '作者链接',
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父级ID',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父级评论ID',
+  `reply_to_id` int(10) DEFAULT '0' COMMENT '被回复评论ID',
   `user_id` int(10) NOT NULL DEFAULT '0' COMMENT '登录用户需要记录用户ID',
   `time_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -329,6 +330,7 @@ CREATE TABLE IF NOT EXISTS `js2system_guestbook` (
   `email` char(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电子邮箱',
   `phone` char(11) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '电话号码',
   `content` varchar(17500) COLLATE utf8_unicode_ci NOT NULL COMMENT '留言内容',
+  `user_id` int(10) DEFAULT '0' COMMENT '登录用户的ID',
   `time_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='留言表';
@@ -365,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `js2system_menu` (
 DELETE FROM `js2system_menu`;
 /*!40000 ALTER TABLE `js2system_menu` DISABLE KEYS */;
 INSERT INTO `js2system_menu` (`id`, `name`, `list`) VALUES
-	(1, '菜单', 'a:4:{i:0;a:5:{s:2:"id";s:21:"oZ5EhsQShql1NXPTw47hd";s:5:"label";s:7:"windows";s:4:"link";i:1;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:1;a:5:{s:2:"id";s:21:"W9BzIb8XK980l15F-t-9z";s:5:"label";s:12:"前端笔记";s:4:"link";i:2;s:4:"type";s:8:"category";s:8:"children";a:3:{i:0;a:5:{s:2:"id";s:21:"ctT-s3CB7gHzoTVp8FLz-";s:5:"label";s:10:"javascript";s:4:"link";i:3;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:1;a:5:{s:2:"id";s:21:"QnBYvjalUZBhlUuzwTitm";s:5:"label";s:3:"css";s:4:"link";i:4;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:2;a:5:{s:2:"id";s:21:"koNThFUsK7RkAvnBeIRlN";s:5:"label";s:3:"vue";s:4:"link";i:6;s:4:"type";s:8:"category";s:8:"children";a:0:{}}}}i:2;a:5:{s:2:"id";s:21:"r3ffzwmMQPulFnqclMbht";s:5:"label";s:12:"开发工具";s:4:"link";i:5;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:3;a:5:{s:2:"id";s:21:"RiY9mzrHvFtqYZ9eIbAe3";s:5:"label";s:12:"关于……";s:4:"link";i:3;s:4:"type";s:4:"post";s:8:"children";a:0:{}}}');
+	(1, '菜单', 'a:5:{i:0;a:5:{s:2:"id";s:21:"ZEU6Vih1oGGDnA0Q-HLqD";s:5:"label";s:7:"windows";s:4:"link";i:1;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:1;a:5:{s:2:"id";s:21:"klqpqygKMPI8zuyww1S4D";s:5:"label";s:12:"前端笔记";s:4:"link";i:2;s:4:"type";s:8:"category";s:8:"children";a:3:{i:0;a:5:{s:2:"id";s:21:"ffMDnWSxREafX3RVNTB4m";s:5:"label";s:10:"javascript";s:4:"link";i:3;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:1;a:5:{s:2:"id";s:21:"5zK-oKu07-GN9xlZotgUc";s:5:"label";s:3:"css";s:4:"link";i:4;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:2;a:5:{s:2:"id";s:21:"OBVrA2TNwlBQmn1gHy-pr";s:5:"label";s:3:"vue";s:4:"link";i:6;s:4:"type";s:8:"category";s:8:"children";a:0:{}}}}i:2;a:5:{s:2:"id";s:21:"go5uc-rwNRQCdkBXSTDTN";s:5:"label";s:12:"开发工具";s:4:"link";i:5;s:4:"type";s:8:"category";s:8:"children";a:0:{}}i:3;a:5:{s:2:"id";s:21:"OkqCEfEvSxitDFfNyI2hk";s:5:"label";s:12:"关于……";s:4:"link";i:3;s:4:"type";s:4:"post";s:8:"children";a:0:{}}i:4;a:5:{s:2:"id";s:21:"SKzDbjUsS5pI43iwcGzdk";s:5:"label";s:6:"注册";s:4:"link";s:14:"/register.html";s:4:"type";s:6:"custom";s:8:"children";a:0:{}}}');
 /*!40000 ALTER TABLE `js2system_menu` ENABLE KEYS */;
 
 -- 导出  表 js2system.js2system_meta 结构
@@ -405,9 +407,9 @@ CREATE TABLE IF NOT EXISTS `js2system_post` (
 DELETE FROM `js2system_post`;
 /*!40000 ALTER TABLE `js2system_post` DISABLE KEYS */;
 INSERT INTO `js2system_post` (`id`, `title`, `content`, `type`, `author_id`, `category_id`, `thumbnail`, `cover`, `view`, `top`, `time_add`, `time_modify`, `time_delete`) VALUES
-	(1, '留言页面', '', 'single', 1, '0', '', NULL, 134, 0, '2021-05-02 22:52:28', '2022-03-11 16:23:59', NULL),
+	(1, '留言页面', '', 'single', 1, '0', '', NULL, 152, 0, '2021-05-02 22:52:28', '2022-06-05 19:26:16', NULL),
 	(2, '联系我们', '<p>电子邮箱：im@mkinit.com</p>', 'single', 1, '0', '', NULL, 14, 0, '2021-05-03 23:59:32', '2022-03-11 16:24:36', NULL),
-	(3, '关于……', '<p>个人博客是在学习ThinkPHP6和NUXT时开发的系统；</p>\n<p>后台基于vue2、element-ui前后端分离的模式；</p>\n<p>前台有传统的后端渲染（模板）和基于node.js的后端渲染NUXT框架（SSR）两种模式。</p>\n<p>基本功能包括：系统设置、菜单、分类、内容（标签、自定义字段、评论）、链接、文件、用户、角色权限等模块，已完善的有60个增删改查数据接口；</p>\n<p>部分功能参考了wordpress，比如文章的标签、自定义字段、媒体库。</p>\n<p><img src="https://im.mkinit.com/upload/20220309160504-1_900.png" alt="/upload/20220309160504-1.png" data-origin="https://im.mkinit.com/upload/20220309160504-1.png" /><img src="https://im.mkinit.com/upload/20220309160453-1_900.png" alt="/upload/20220309160453-1.png" data-origin="https://im.mkinit.com/upload/20220309160453-1.png" /><img src="https://im.mkinit.com/upload/20220309160443-1_900.png" alt="/upload/20220309160443-1.png" data-origin="https://im.mkinit.com/upload/20220309160443-1.png" /><img src="https://im.mkinit.com/upload/20220309160423-1_900.png" alt="/upload/20220309160423-1.png" data-origin="https://im.mkinit.com/upload/20220309160423-1.png" /><img src="https://im.mkinit.com/upload/20220309160656-2_900.png" alt="/upload/20220309160656-2.png" data-origin="https://im.mkinit.com/upload/20220309160656-2.png" /><img src="https://im.mkinit.com/upload/20220309160656-1_900.png" alt="/upload/20220309160656-1.png" data-origin="https://im.mkinit.com/upload/20220309160656-1.png" /><img src="https://im.mkinit.com/upload/20220309161334-1_900.png" alt="/upload/20220309161334-1.png" data-origin="https://im.mkinit.com/upload/20220309161334-1.png" /></p>', 'single', 1, '0', '', NULL, 49, 0, '2021-08-16 23:04:43', '2022-03-17 13:28:58', NULL);
+	(3, '关于……', '<p>个人博客是在学习ThinkPHP6和NUXT时开发的系统；</p>\n<p>后台基于vue2、element-ui前后端分离的模式；</p>\n<p>前台有传统的后端渲染（模板）和基于node.js的后端渲染NUXT框架（SSR）两种模式。</p>\n<p>基本功能包括：系统设置、菜单、分类、内容（标签、自定义字段、评论）、链接、文件、用户、角色权限等模块，已完善的有60个增删改查数据接口；</p>\n<p>部分功能参考了wordpress，比如文章的标签、自定义字段、媒体库。</p>\n<p><img src="https://im.mkinit.com/upload/20220309160504-1_900.png" alt="/upload/20220309160504-1.png" data-origin="https://im.mkinit.com/upload/20220309160504-1.png" /><img src="https://im.mkinit.com/upload/20220309160453-1_900.png" alt="/upload/20220309160453-1.png" data-origin="https://im.mkinit.com/upload/20220309160453-1.png" /><img src="https://im.mkinit.com/upload/20220309160443-1_900.png" alt="/upload/20220309160443-1.png" data-origin="https://im.mkinit.com/upload/20220309160443-1.png" /><img src="https://im.mkinit.com/upload/20220309160423-1_900.png" alt="/upload/20220309160423-1.png" data-origin="https://im.mkinit.com/upload/20220309160423-1.png" /><img src="https://im.mkinit.com/upload/20220309160656-2_900.png" alt="/upload/20220309160656-2.png" data-origin="https://im.mkinit.com/upload/20220309160656-2.png" /><img src="https://im.mkinit.com/upload/20220309160656-1_900.png" alt="/upload/20220309160656-1.png" data-origin="https://im.mkinit.com/upload/20220309160656-1.png" /><img src="https://im.mkinit.com/upload/20220309161334-1_900.png" alt="/upload/20220309161334-1.png" data-origin="https://im.mkinit.com/upload/20220309161334-1.png" /></p>', 'single', 1, '0', '', NULL, 50, 0, '2021-08-16 23:04:43', '2022-06-05 19:07:28', NULL);
 /*!40000 ALTER TABLE `js2system_post` ENABLE KEYS */;
 
 -- 导出  表 js2system.js2system_post_tag 结构
@@ -877,11 +879,11 @@ CREATE TABLE IF NOT EXISTS `js2system_setting` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='系统信息表（数据不能清）';
 
--- 正在导出表  js2system.js2system_setting 的数据：15 rows
+-- 正在导出表  js2system.js2system_setting 的数据：16 rows
 DELETE FROM `js2system_setting`;
 /*!40000 ALTER TABLE `js2system_setting` DISABLE KEYS */;
 INSERT INTO `js2system_setting` (`id`, `key`, `value`, `annotation`) VALUES
-  (1, 'site', 'js2api.com', '网站域名'),
+	(1, 'site', 'js2api.com', '网站域名'),
 	(2, 'site_name', '竹夭', '网站名称'),
 	(3, 'site_keywords', '', '网站关键字'),
 	(4, 'site_description', '竹夭的个人博客，记录一些前后端开发的内容，包括但不限于。', '网站描述'),
@@ -893,8 +895,8 @@ INSERT INTO `js2system_setting` (`id`, `key`, `value`, `annotation`) VALUES
 	(10, 'upload_limit', '2', '文件上传大小限制'),
 	(11, 'theme', 'blog', '网站模板（目录名称，前后端分离模式不可用）'),
 	(12, 'ba', '5ab7eb2539b0d3e91ff9077125c1c6bf', '百度统计ID'),
-	(13, 'product', '1', '产品栏目，分类ID'),
-	(14, 'news', '1', '新闻栏目，分类ID'),
+	(13, 'product', '', '产品栏目，分类ID'),
+	(14, 'news', '', '新闻栏目，分类ID'),
 	(15, 'site_title', '个人博客', '网站标题'),
 	(16, 'police', '', '公安备案号');
 /*!40000 ALTER TABLE `js2system_setting` ENABLE KEYS */;
@@ -940,6 +942,7 @@ CREATE TABLE IF NOT EXISTS `js2system_user` (
   `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户名',
   `password` char(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户密码',
   `nickname` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '用户昵称',
+  `avatar` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '用户头像',
   `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT '用户邮箱',
   `phone` char(11) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '用户手机号',
   `time_add` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
@@ -955,9 +958,9 @@ CREATE TABLE IF NOT EXISTS `js2system_user` (
 -- 正在导出表  js2system.js2system_user 的数据：2 rows
 DELETE FROM `js2system_user`;
 /*!40000 ALTER TABLE `js2system_user` DISABLE KEYS */;
-INSERT INTO `js2system_user` (`id`, `username`, `password`, `nickname`, `email`, `phone`, `time_add`, `role_id`, `time_delete`) VALUES
-	(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'nickname', 'email@qq.com', '13800138000', '1990-02-08 00:00:00', 1, NULL),
-	(2, 'mkinit', 'e10adc3949ba59abbe56e057f20f883e', 'mkinit', 'email1@qq.com', '13800138001', '2021-11-26 15:40:51', 2, NULL);
+INSERT INTO `js2system_user` (`id`, `username`, `password`, `nickname`, `avatar`, `email`, `phone`, `time_add`, `role_id`, `time_delete`) VALUES
+	(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'nickname', NULL, 'im@mkinit.com', '13800138000', '1990-02-08 00:00:00', 1, NULL),
+	(2, 'mkinit', 'e10adc3949ba59abbe56e057f20f883e', 'mkinit', NULL, 'layso@qq.com', '13800138001', '2021-11-26 15:40:51', 2, NULL);
 /*!40000 ALTER TABLE `js2system_user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
