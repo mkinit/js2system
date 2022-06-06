@@ -10,6 +10,7 @@
 				<el-button @click="metaAdd">添加自定义属性</el-button>
 				<div class="meta-list">
 					<div class="item" v-for="(meta,index) in post.meta" :key="meta.id">
+						<i class="el-icon-sort"></i>
 						<el-autocomplete class="meta-key" v-model="meta.key" :fetch-suggestions="queryMetaKey" placeholder="请输入内容"></el-autocomplete>
 						<el-input class="meta-value" v-model="meta.value" placeholder="属性值"></el-input>
 						<el-button type="danger" size="mini" @click="metaDelete(index)">删除</el-button>
@@ -81,6 +82,7 @@
 import tinymce from "@tinymce/tinymce-vue"
 import dateFormat from '@/common/date-format.js'
 import media from '@/components/media/media.vue'
+import Sortable from 'sortablejs';
 import {
 	apiCategoryList, //获取分类列表
 	apiCategoryAdd, //添加分类
@@ -257,6 +259,7 @@ export default {
 				key: '',
 				value: ''
 			})
+			Sortable.create(document.querySelector('.meta-list'))
 		},
 
 		//删除自定义属性
@@ -441,6 +444,15 @@ export default {
 
 				.meta-value {
 					width: 60%;
+				}
+
+				.el-icon-sort{
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size:1.25em;
+					margin-right:.5em;
+					cursor:move;
 				}
 			}
 		}
