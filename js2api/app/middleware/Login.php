@@ -2,7 +2,6 @@
 namespace app\middleware;
 
 use app\common\Api;
-use app\common\model\User as UserModel;
 use app\common\Tools;
 use think\Request;
 
@@ -19,9 +18,6 @@ class Login extends Api {
 		} catch (\Throwable $e) {
 			return $this->response(null, $e->getMessage(), 401);
 		}
-
-		$user = UserModel::find($result->aud);
-		$this->user = $user;
 		return $next($request);
 	}
 }

@@ -24,7 +24,6 @@ class Permission extends Api {
 		}
 
 		$user = UserModel::find($result->aud);
-		$this->user = $user;
 		//如果不是系统管理员需要判断权限
 		if ($user['id'] != 1) {
 			$this->controller = explode('.', $request->controller())[1]; //获取当前控制器（过滤版本前缀）

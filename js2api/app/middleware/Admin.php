@@ -2,7 +2,6 @@
 namespace app\middleware;
 
 use app\common\Api;
-use app\common\model\User as UserModel;
 use app\common\Tools;
 use think\Request;
 
@@ -20,11 +19,9 @@ class Admin extends Api {
 			return $this->response(null, $e->getMessage(), 401);
 		}
 
-		$user = UserModel::find($result->aud);
-		if ($user['id'] != 1) {
+		if ($result->aud != 1) {
 			return $this->response(null, '需要系统管理员权限', 403);
 		}
-		$this->user = $user;
 		return $next($request);
 	}
 }

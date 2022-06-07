@@ -6,6 +6,7 @@
 namespace app\common;
 use app\common\model\Category as CategoryModel;
 use app\common\model\Setting as SettingModel;
+use app\common\model\User as UserModel;
 use think\Request;
 
 class Api {
@@ -15,13 +16,22 @@ class Api {
 	protected $setting_info; //系统设置信息
 	protected $thumbnail_size; //系统设置的缩略图尺寸
 	protected $categories; //分类目录
+	protected $user;
 	public function __construct(Request $request) {
 		$this->request = $request;
 		$this->page = $request->get('page', 1);
 		$this->pageSize = $request->get('page_size', 10);
 		$this->getSettingInfo();
 		$this->categories = CategoryModel::select();
-		$this->user = session('user');
+
+		$header = $request->header();
+		if (empty($header['token'])) {
+			$this->user = null;
+		} else {
+			$result = Tools::tokenValidate($header['token']);
+			$this->user = UserModel::find($result->aud);
+		}
+
 	}
 
 	//系统设置信息
