@@ -239,48 +239,44 @@ class User extends Api {
 		$password_old 原密码
 		$password_new 新密码
 	*/
-	public function update(Request $request) {
-		$header = $request->header();
-		$put_data = $request->put();
+	public function update($nickname = '', $password_old = '', $password_new = '') {
 		$user = $this->user;
 
+		if ($nickname && $user['nickname'] != $nickname) {
+			try {
+				validate(UserValidate::class)->check([
+					'nickname' => $nickname,
+				]);
+			} catch (ValidateException $e) {
+				return $this->response(null, $e->getMessage(), 400);
+			}
+		}
+
+		$user->nickname = $nickname;
+
 		//修改密码
-		if (!empty($put_data['password_old'])) {
-			if (md5($put_data['password_old']) !== $user->password) {
+		if (!empty($password_old)) {
+			if (md5($password_old) !== $user->password) {
 				return $this->response(null, '原密码错误', 400);
 			}
-			if (empty($put_data['password_new'])) {
+			if (empty($password_new)) {
 				return $this->response(null, '请输入新密码', 400);
 			}
 			try {
 				validate(UserValidate::class)->check([
-					'password' => $put_data['password_new'],
+					'password' => $password_new,
 				]);
 			} catch (ValidateException $e) {
 				// 验证失败 输出错误信息
 				return $this->response(null, $e->getError(), 400);
 			}
-			$user['password'] = md5($put_data['password_new']);
-		}
-
-		if (!empty($put_data['nickname']) && $put_data['nickname'] != $user['nickname']) {
-			try {
-				validate(UserValidate::class)->check([
-					'nickname' => $put_data['nickname'],
-				]);
-
-			} catch (ValidateException $e) {
-				return $this->response(null, $e->getMessage(), 400);
-			}
-			$user->nickname = $put_data['nickname'];
+			$user['password'] = md5($password_new);
 		}
 
 		$user->save();
-		$token = Tools::token($user->id); //生成token
-		$user['role'] = $user->role;
-		$user['role']['action_list'] = $user->role->action;
-		$user['token'] = $token;
-		$user->append(['username', 'email', 'phone']);
+		// $user['role'] = $user->role;
+		// $user['role']['action_list'] = $user->role->action;
+		// $user->append(['username', 'email', 'phone']);
 		return $this->response($user);
 	}
 
