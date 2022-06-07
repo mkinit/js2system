@@ -43,11 +43,11 @@ export default {
 			const data = {
 				nickname: this.user_info.nickname
 			}
-			if(this.password_old){
-				if(!this.password_new||!this.password_new_confirm){
+			if (this.password_old) {
+				if (!this.password_new || !this.password_new_confirm) {
 					return this.$message.warning("请输入新密码和确认密码")
 				}
-				if(this.password_new!==this.password_new_confirm){
+				if (this.password_new !== this.password_new_confirm) {
 					return this.$message.warning("新密码和确认密码不一致")
 				}
 				data.password_old = this.password_old
@@ -56,7 +56,9 @@ export default {
 			apiUserUpdate(data).then(res => {
 				this.$message.success("保存成功")
 				this.password_old = this.password_new = this.password_new_confirm = ''
-				this.update({ key: "user", data: res.data })
+				const data = Object.assign(this.user_info, res.data)
+				this.user_info = data
+				this.update({ key: "user", data })
 			})
 		}
 	},
@@ -76,8 +78,9 @@ export default {
 		margin: 1em;
 		display: flex;
 		line-height: 32px;
-		.title{
-			min-width:6em;
+
+		.title {
+			min-width: 6em;
 			text-align: right;
 		}
 	}
