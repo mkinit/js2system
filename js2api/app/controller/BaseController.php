@@ -26,18 +26,17 @@ class BaseController {
 
 	public function __construct(App $app) {
 		$this->app = $app;
-		$this->request = $this->app->request;
+		$this->request = $app->request;
 		$this->categories = CategoryModel::select()->toArray();
 		$this->user = session('user');
 
 		if (!session('referer')) {
 			session('referer', '/');
 		}
-
 		//设置来路
 		$server = $this->request->server();
-		if (!empty($server['HTTP_REFERER']) && !stristr($server['HTTP_REFERER'], 'register') && !stristr($server['HTTP_REFERER'], 'login')) {
-			session('referer', $server['HTTP_REFERER']);
+		if (!stristr($server['REQUEST_URI'], 'register') && !stristr($server['REQUEST_URI'], 'login')) {
+			session('referer', $server['REQUEST_URI']);
 		}
 
 		//处理网站设置信息
