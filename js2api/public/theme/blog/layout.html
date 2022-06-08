@@ -2,17 +2,6 @@
 <html lang="zh-cmn-Hans-CN">
 
 <head>
-	{if !empty($setting['ba'])}
-	<script>
-		var _hmt = _hmt || [];
-		(function() {
-			var hm = document.createElement("script");
-			hm.src = "https://hm.baidu.com/hm.js?{$setting['ba']}";
-			var s = document.getElementsByTagName("script")[0]; 
-			s.parentNode.insertBefore(hm, s);
-		})();
-	</script>
-	{/if}
 	<meta charset="utf-8" />
 	<title>{$title?$title:$setting['site_title']} - {$setting['site_name']}</title>
 	<meta content="{$keywords?$keywords:$setting['site_keywords']}" name="keywords" />
@@ -120,6 +109,17 @@
 		</footer>
 	</div>
 	<script type="module" src="__js__/main.js"></script>
+	{if !empty($setting['ba'])}
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?{$setting['ba']}";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+	{/if}
 </body>
 
 </html>
