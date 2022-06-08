@@ -1,21 +1,48 @@
 <div class="p-user">
 	<div class="container js2-center-wrap w828">
-		<div class="user-box">
-			<div class="item">
-				<span class="title">用户名：{$user['username']}</span>
+		<form class="user-box" method="POST" onsubmit="submitBefore()">
+			<input type="hidden" name="action" value="update" />
+			<label class="item">
+				<span class="title">用户名：</span>
+				{$user['username']}
+			</label>
+			<label class="item">
+				<span class="title">邮箱：</span>
+				{$user['email']}
+			</label>
+			<label class="item">
+				<span class="title">角色：</span>
+				{$user['role']['name']}
+			</label>
+			<label class="item">
+				<span class="title">昵称：</span>
+				<input type="text" name="nickname" value="{$user['nickname']}" />
+			</label>
+			<label class="item">
+				<span class="title">原密码：</span>
+				<input type="password" name="password_old" />
+				<span class="tip">（不修改密码不填即可）</span>
+			</label>
+			<label class="item">
+				<span class="title">新密码：</span>
+				<input type="password" name="password_new" />
+			</label>
+			<label class="item">
+				<span class="title">确认密码：</span>
+				<input type="password" name="password-confirm" />
+			</label>
+			<div class="bottom">
+				<div class="message">{$message}</div>
+				<input class="js2-btn" type="submit" value="更新资料" />
 			</div>
-			<div class="item">
-				<span class="title">昵称：{$user['nickname']}</span>
-			</div>
-			<div class="item">
-				<span class="title">邮箱：{$user['email']}</span>
-			</div>
-			<div class="item">
-				<span class="title">手机：{$user['phone']}</span>
-			</div>
-			<div class="item">
-				<span class="title">角色：{$user['role']['name']}</span>
-			</div>
-		</div>
+		</form>
 	</div>
 </div>
+<script>
+	const message = document.querySelector('.message')
+	if(message.innerText){
+		setTimeout(()=>{
+			history.back()
+		},1500)
+	}
+</script>
