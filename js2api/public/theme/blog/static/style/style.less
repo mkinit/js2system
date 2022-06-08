@@ -475,7 +475,7 @@ footer {
 		color: red;
 	}
 
-	.error-message {
+	.message {
 		color: red;
 		font-size: 13px;
 		margin: .5em 0;
@@ -513,9 +513,33 @@ footer {
 
 .p-user{
 	.user-box{
-		width:50%;
+		width:60%;
 		margin:2em auto;
 		box-shadow: 0 0 6px @border;
-		padding:1em;
+		padding:1em 2em;
+		.item{
+			line-height: 2;
+			input{
+				margin:.25em 0;
+			}
+		}
+		.title{
+			display: inline-block;
+			min-width: 5em;
+			text-align:right;
+		}
+		.tip{
+			font-size:12px;
+		}
+		.message{
+			font-size:13px;
+			color:red;
+			margin:.5em 0;
+		}
+		.bottom{
+			text-align:center;
+			margin-top:1em;
+			padding-bottom:1em;
+		}
 	}
 }
