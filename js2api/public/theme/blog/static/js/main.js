@@ -30,9 +30,21 @@
 const menu = document.querySelector('.c-menu')
 const menu_btn = menu.querySelector('.menu-btn')
 const menu_close_btn = menu.querySelector('.close-btn')
-menu_btn.onclick = ()=>{
+menu_btn.onclick = () => {
 	menu.classList.add('show')
 }
-menu_close_btn.onclick = ()=>{
+menu_close_btn.onclick = () => {
 	menu.classList.remove('show')
+}
+
+//打开模态框
+window.js2showModal = selector => {
+	document.querySelector(selector).style.display = 'flex'
+}
+
+//关闭模态框
+window.js2closeModal = selector => {
+	if (event.target.className.indexOf(selector.replace('.', '')) >= 0) {
+		document.querySelector(selector).style.display = 'none'
+	}
 }

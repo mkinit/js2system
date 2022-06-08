@@ -25,24 +25,28 @@
 	.w1024 {
 		max-width: 1024px;
 	}
+
 	.w960 {
 		max-width: 960px;
 	}
+
 	.w828 {
 		max-width: 828px;
 	}
 }
 
 //两栏布局
-.js2-column-2{
+.js2-column-2 {
 	display: flex;
 	justify-content: space-between;
 }
-.js2-primary{
-	width:65%;
+
+.js2-primary {
+	width: 65%;
 }
-.js2-secondary{
-	width:32%;
+
+.js2-secondary {
+	width: 32%;
 }
 
 //元素居中
@@ -87,8 +91,8 @@
 }
 
 //内边距盒子
-.js2-padding-box{
-	padding:1em 1.5em;
+.js2-padding-box {
+	padding: 1em 1.5em;
 }
 
 //边框盒子
@@ -100,6 +104,27 @@
 .js2-radius {
 	border-radius: 4px;
 	overflow: hidden;
+}
+
+//模态框
+.js2-modal {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1000;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(85, 85, 85, 0.95);
+	display: none;
+	justify-content: center;
+	align-items: center;
+
+	.modal-content {
+		padding: 1em 2em;
+		box-shadow: 0 0 5px #f5f5f5;
+		border-radius: 0.25em;
+		background-color: #FFF;
+	}
 }
 
 //CSS图标
@@ -158,33 +183,33 @@
 .icon-triangle-bottom,
 .icon-triangle-left {
 	border: 5px solid @font-second;
-	border-radius:4px;
-	position:relative;
+	border-radius: 4px;
+	position: relative;
 
 }
 
 .icon-triangle-top {
 	border-left-color: transparent;
 	border-right-color: transparent;
-	border-top:none;
-	top:-3px;
+	border-top: none;
+	top: -3px;
 }
 
 .icon-triangle-right {
 	border-top-color: transparent;
 	border-bottom-color: transparent;
-	border-right:none;
+	border-right: none;
 }
 
 .icon-triangle-bottom {
 	border-left-color: transparent;
 	border-right-color: transparent;
-	border-bottom:none;
-	top:-3px;
+	border-bottom: none;
+	top: -3px;
 }
 
 .icon-triangle-left {
 	border-top-color: transparent;
 	border-bottom-color: transparent;
-	border-left:none;
+	border-left: none;
 }
