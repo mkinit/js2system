@@ -73,27 +73,25 @@ verify_code_btn.addEventListener('click', () => {
 			Toastify({
 				text: '验证码发送成功',
 			}).showToast()
-
+			let second = 60
+			timer = setInterval(() => {
+				second--
+				target.innerText = second + 's'
+				if (second <= 0) {
+					clearInterval(timer)
+					target.innerText = verify_code_btn_text
+				}
+			}, 1000)
 		} else {
 			Toastify({
 				text: data.msg,
 			}).showToast()
 		}
-
-		let second = 60
-		timer = setInterval(() => {
-			second--
-			target.innerText = second + 's'
-			if (second <= 0) {
-				clearInterval(timer)
-				target.innerText = verify_code_btn_text
-				target.removeAttribute('disabled')
-			}
-		}, 1000)
+		target.removeAttribute('disabled')
 	})
 })
 
-function submitBefore(){
+function submitBefore() {
 	event.preventDefault()
 	if (!email.value) {
 		return Toastify({
@@ -120,7 +118,7 @@ function submitBefore(){
 			text: "请再次输入密码确认",
 		}).showToast()
 	}
-	if(password.value!==password_confirm.value){
+	if (password.value !== password_confirm.value) {
 		return Toastify({
 			text: "两次输入的密码不一致",
 		}).showToast()
