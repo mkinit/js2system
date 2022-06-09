@@ -9,6 +9,7 @@
 			<label class="item">
 				<span class="title">邮箱：</span>
 				{$user['email']}
+				<a class="text-btn" href="javascript:js2showModal('.js2-modal');">修改邮箱</a>
 			</label>
 			<label class="item">
 				<span class="title">角色：</span>
@@ -36,13 +37,113 @@
 				<input class="js2-btn" type="submit" value="更新资料" />
 			</div>
 		</form>
+		<div class="js2-modal" onclick="js2closeModal('.js2-modal')">
+			<div class="modal-content">
+				<div class="form-modify-email">
+					<div class="top">修改电子邮箱</div>
+					<label class="label-email">
+						<span class="title">
+							<span class="required">*</span>电子邮箱：
+						</span>
+						<input type="text" name="email" placeholder="请输入电子邮箱" />
+						<button type="button" class="js2-btn verify-code-btn">获取验证码</button>
+					</label>
+					<label>
+						<span class="title">
+							<span class="required">*</span>验证码：
+						</span>
+						<input type="text" name="verify_code" placeholder="请输入验证码" />
+					</label>
+					<div class="bottom">
+						<button class="js2-btn confirm">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script>
-	const message = document.querySelector('.message')
-	if(message.innerText){
-		setTimeout(()=>{
-			history.back()
-		},1500)
+const message = document.querySelector('.message')
+if (message.innerText) {
+	setTimeout(() => {
+		history.back()
+	}, 1500)
+}
+
+const email = document.querySelector('input[name=email]')
+const verify_code = document.querySelector('input[name=verify_code]')
+const verify_code_btn = document.querySelector('.verify-code-btn')
+const verify_code_btn_text = verify_code_btn.innerText
+const confirm_btn = document.querySelector('.confirm')
+
+confirm_btn.addEventListener('click', () => {
+	if (!email.value || !verify_code.value) {
+		return Toastify({
+			text: "请输入电子邮箱和验证码",
+		}).showToast()
 	}
+	const data = {
+		email: email.value,
+		verify_code: verify_code.value
+	}
+	fetch('/js2-json/v1/user/email-modify', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	}).then(response => response.json()).then(data => {
+		if (data.code == 200) {
+			Toastify({
+				text: '修改成功',
+			}).showToast()
+			history.go(0)
+		} else {
+			Toastify({
+				text: data.msg,
+			}).showToast()
+		}
+	})
+})
+
+verify_code_btn.addEventListener('click', () => {
+	if (!email.value) {
+		return Toastify({
+			text: "请输入电子邮箱",
+		}).showToast()
+	}
+	const target = event.target
+	clearInterval(timer)
+	var timer = null
+	target.setAttribute('disabled', true)
+	Toastify({
+		text: '正在发送验证码',
+	}).showToast()
+	fetch('/js2-json/v1/mail/verify-code?email=' + email.value, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(response => response.json()).then(data => {
+		if (data.code == 200) {
+			Toastify({
+				text: '验证码发送成功',
+			}).showToast()
+			let second = 60
+			timer = setInterval(() => {
+				second--
+				target.innerText = second + 's'
+				if (second <= 0) {
+					clearInterval(timer)
+					target.innerText = verify_code_btn_text
+				}
+			}, 1000)
+		} else {
+			Toastify({
+				text: data.msg,
+			}).showToast()
+		}
+		target.removeAttribute('disabled')
+	})
+})
 </script>
