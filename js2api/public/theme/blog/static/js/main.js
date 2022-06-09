@@ -44,7 +44,7 @@ window.js2showModal = selector => {
 
 //关闭模态框
 window.js2closeModal = selector => {
-	if (event.target.className.indexOf(selector.replace('.', '')) >= 0) {
+	if (!event||event.target.className.indexOf(selector.replace('.', '')) >= 0) {
 		document.querySelector(selector).style.display = 'none'
 	}
 }
