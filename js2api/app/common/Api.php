@@ -30,7 +30,11 @@ class Api {
 		} else {
 			$result = Tools::tokenValidate($header['token']);
 			if (!empty($result->aud)) {
-				$this->user = UserModel::find($result->aud);
+				$user = UserModel::find($result->aud);
+				$user['role'] = $user->role;
+				$user['role']['action_list'] = $user->role->action;
+				$user['token'] = $header['token'];
+				$this->user = $user;
 			}
 		}
 
