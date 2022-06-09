@@ -62,6 +62,11 @@ class Tools {
 		if (env('APP_DEBUG') && $token === '0208') {
 			return (object) array("aud" => 1, "iat" => 1617083383, "exp" => 1617169783);
 		}
+		try {
+			return JWT::decode($token, Config::get('key.token_key'), ['HS256']);
+		} catch (\Throwable $e) {
+			return $e->getMessage();
+		}
 		return JWT::decode($token, Config::get('key.token_key'), ['HS256']);
 	}
 
