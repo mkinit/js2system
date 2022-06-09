@@ -51,6 +51,7 @@ Route::group('js2-json/v1', function () {
 		Route::post('login', 'v1.User/login'); //用户登陆
 		Route::get('info', 'v1.User/info')->middleware(Login::class); //当前用户信息
 		Route::put('update', 'v1.User/update')->middleware(Login::class); //修改当前用户信息
+		Route::put('email-modify', 'v1.User/emailModify')->middleware(Login::class); //修改邮件
 	});
 
 	//用户路由（管理员）
