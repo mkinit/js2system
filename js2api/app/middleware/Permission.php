@@ -3,7 +3,6 @@ namespace app\middleware;
 
 use app\common\Api;
 use app\common\model\Role as RoleModel;
-use app\common\model\User as UserModel;
 use app\common\Tools;
 use think\Request;
 
@@ -17,13 +16,12 @@ class Permission extends Api {
 			return $this->response(null, '请登陆', 401);
 		}
 
-		try {
-			$result = Tools::tokenValidate($header['token']);
-		} catch (\Throwable $e) {
-			return $this->response(null, $e->getMessage(), 401);
+		$result = Tools::tokenValidate($header['token']);
+		if (empty($result->aud)) {
+			return $this->response(null, $result, 401);
 		}
 
-		$user = UserModel::find($result->aud);
+		$user = $this->user;
 		//如果不是系统管理员需要判断权限
 		if ($user['id'] != 1) {
 			$this->controller = explode('.', $request->controller())[1]; //获取当前控制器（过滤版本前缀）

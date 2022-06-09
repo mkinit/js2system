@@ -13,11 +13,11 @@ class Login extends Api {
 			return $this->response(null, '请登陆', 401);
 		}
 
-		try {
-			$result = Tools::tokenValidate($header['token']);
-		} catch (\Throwable $e) {
-			return $this->response(null, $e->getMessage(), 401);
+		$result = Tools::tokenValidate($header['token']);
+		if (empty($result->aud)) {
+			return $this->response(null, $result, 401);
 		}
+
 		return $next($request);
 	}
 }
