@@ -26,10 +26,12 @@ class Api {
 
 		$header = $request->header();
 		if (empty($header['token'])) {
-			$this->user = null;
+			$this->user = session('user');
 		} else {
 			$result = Tools::tokenValidate($header['token']);
-			$this->user = UserModel::find($result->aud);
+			if (!empty($result->aud)) {
+				$this->user = UserModel::find($result->aud);
+			}
 		}
 
 	}
