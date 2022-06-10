@@ -9,11 +9,13 @@ use think\Request;
 class Email extends Api {
 	//用户注册验证码
 	public function verify($email, Request $request) {
-		//防止频繁请求，API客户端必须携带cookie:PHPSESSID=f53ba7a7090cf68a134fb6a88d02fdcf
-		$session_id = cookie('PHPSESSID');
-		$session_path = runtime_path() . '/session/sess_' . $session_id; //session文件路径
-		if (!is_file($session_path)) {
-			return $this->response(null, '非法访问', 400);
+		//防止没有登录的用户频繁请求，API客户端必须携带cookie:PHPSESSID=XXXXXX
+		if (!$this->user) {
+			$session_id = cookie('PHPSESSID');
+			$session_path = runtime_path() . '/session/sess_' . $session_id; //session文件路径
+			if (!is_file($session_path)) {
+				return $this->response(null, '非法访问', 400);
+			}
 		}
 
 		$verify_code = Tools::verifyCode(6);
