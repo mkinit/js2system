@@ -51,7 +51,7 @@ class Tools {
 		$payload = array(
 			'aud' => $user_id, //jwt所面向的用户
 			'iat' => $nowtime, //签发时间
-			'exp' => $nowtime + 3153600000, //100年，过期时间（秒）
+			'exp' => $nowtime + 86400, //24小时，过期时间（秒）
 		);
 		return JWT::encode($payload, Config::get('key.token_key'));
 	}
