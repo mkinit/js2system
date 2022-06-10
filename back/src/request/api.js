@@ -53,6 +53,11 @@ export const apiUserUpdate = data => {
 	return axios.put('/user/update', data)
 }
 
+//修改当前用户邮箱
+export const apiEmailUpdate = data => {
+	return axios.put('/user/email-modify', data)
+}
+
 //角色列表
 export const apiRoleList = () => {
 	return axios.get('/role')
@@ -279,4 +284,9 @@ export const apiBannerAdd = data => {
 //删除轮播图
 export const apiBannerDelete = ids => {
 	return axios.delete('/banners', { params: { ids } })
+}
+
+//获取验证码
+export const apiVerifyCode = email => {
+	return axios.get('/mail/verify-code', { params: { email } })
 }
