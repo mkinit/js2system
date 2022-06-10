@@ -2,9 +2,10 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 import { apiFileList } from '@/request/api.js'
+const user = localStorage.getItem('user')
 export default new Vuex.Store({
 	state: {
-		user: JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user')), //当前用户信息
+		user: user ? JSON.parse(user) : null, //当前用户信息
 		sidebar_collapse: false, //边栏展开状态
 		files: null, //文件列表响应数据
 	},

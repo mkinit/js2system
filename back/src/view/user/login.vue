@@ -10,7 +10,6 @@
 					<el-input @keyup.enter.native="login" v-model="password" placeholder="请输入密码" prefix-icon="el-icon-key" show-password></el-input>
 				</div>
 				<div class="bototom">
-					<el-checkbox v-model="auto_login">自动登录</el-checkbox>
 					<el-button type="primary" class="login-btn" @click="login">登录</el-button>
 				</div>
 			</template>
@@ -27,9 +26,8 @@ export default {
 	name: "v-login",
 	data() {
 		return {
-			auto_login: false,
-			username: "",
-			password: "",
+			username: '',
+			password: '',
 		};
 	},
 	methods: {
@@ -37,23 +35,16 @@ export default {
 			const { username, password } = this
 			const redirect = this.$route.query.redirect
 			apiLogin({ username, password }).then((res) => {
-				if (this.auto_login) {
-					//自动登陆
-					localStorage.setItem("token", res.data.token)
-					localStorage.setItem("user", JSON.stringify(res.data))
-				} else {
-					sessionStorage.setItem("token", res.data.token)
-					sessionStorage.setItem("user", JSON.stringify(res.data))
-				}
-
+				localStorage.setItem('user', JSON.stringify(res.data))
+				this.update({ key: 'user', data: res.data })
 				if (redirect) {
 					this.$router.push({ name: redirect })
 				} else {
-					this.$router.replace({ path: "/" })
+					this.$router.replace({ path: '/' })
 				}
-				this.update({ key: "user", data: res.data })
+				this.update({ key: 'user', data: res.data })
 				if (this.password == '123456') {
-					this.$message.warning("为了系统安全，请尽快将初始密码修改（通过右上角用户名进入）！")
+					this.$message.warning('为了系统安全，请尽快将初始密码修改（通过右上角用户名进入）！')
 				}
 			})
 		},
@@ -76,10 +67,11 @@ export default {
 		min-width: 320px;
 		max-width: 360px;
 		box-shadow: 1px 1px 10px @font-second;
-		padding:1em 2em;
-		.item{
-			margin:.5em auto;
-			width:80%;
+		padding: 1.5em 2em;
+
+		.item {
+			margin: .5em auto;
+			width: 80%;
 		}
 	}
 
@@ -91,9 +83,9 @@ export default {
 
 	.bototom {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
-		margin-top: 30px;
+		margin-top: 1em;
 	}
 }
 </style>

@@ -1,17 +1,14 @@
 //退出登陆公共方法
-import store from "@/store.js"
-import router from "@/router/router.js"
+import store from '@/store.js'
+import router from '@/router/router.js'
 export default () => {
 
 	//清除token
-	localStorage.removeItem("token")
-	sessionStorage.removeItem("token")
-	localStorage.removeItem("user")
-	sessionStorage.removeItem("user")
+	localStorage.removeItem('user')
 
 	//清除用户信息
-	store.commit("update", {
-		key: "user",
+	store.commit('update', {
+		key: 'user',
 		data: null,
 	})
 	

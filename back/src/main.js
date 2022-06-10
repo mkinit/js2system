@@ -55,10 +55,7 @@ Vue.component('c-permission', permission)
 router.beforeEach((to, from, next) => {
 	//路由跳转之前
 	document.title = to.meta.title + ' - JS2system'
-	if (
-		to.meta.must_login &&
-		!(localStorage.getItem('token') || sessionStorage.getItem('token'))
-	) {
+	if (to.meta.must_login && !localStorage.getItem('user')) {
 		//登录拦截
 		next({
 			path: '/login',
