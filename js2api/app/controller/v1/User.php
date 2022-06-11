@@ -198,7 +198,7 @@ class User extends Api {
 			return $this->response(null, '密码不能为空', 400);
 		}
 		//查找用户
-		$user = UserModel::where('username', $username)->find();
+		$user = UserModel::where('username|email', $username)->find();
 
 		//如果用户名存在
 		if (!$user) {
