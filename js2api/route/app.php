@@ -52,6 +52,7 @@ Route::group('js2-json/v1', function () {
 		Route::get('info', 'v1.User/info')->middleware(Login::class); //当前用户信息
 		Route::put('update', 'v1.User/update')->middleware(Login::class); //修改当前用户信息
 		Route::put('email-modify', 'v1.User/emailModify')->middleware(Login::class); //修改邮件
+		Route::put('password-reset', 'v1.User/passwordReset'); //修改邮件
 	});
 
 	//用户路由（管理员）
@@ -94,7 +95,6 @@ Route::group('js2-json/v1', function () {
 		Route::post('add', 'v1.Link/add')->action_name('友情链接-添加友情链接')->middleware(Permission::class);
 		Route::put(':id', 'v1.Link/update')->action_name('友情链接-更新友情链接')->middleware(Permission::class);
 		Route::delete('', 'v1.Link/delete')->action_name('友情链接-删除友情链接')->middleware(Permission::class);
-
 	});
 
 	//文件系统
@@ -112,7 +112,6 @@ Route::group('js2-json/v1', function () {
 		Route::post('add', 'v1.Category/add')->action_name('分类管理-添加分类')->middleware(Permission::class);
 		Route::put(':id', 'v1.Category/update')->action_name('分类管理-更新分类')->middleware(Permission::class);
 		Route::delete('', 'v1.Category/delete')->action_name('分类管理-删除分类')->middleware(Permission::class);
-
 	});
 
 	//标签系统
@@ -122,7 +121,6 @@ Route::group('js2-json/v1', function () {
 		Route::post('add', 'v1.Tag/add')->action_name('标签管理-添加标签')->middleware(Permission::class);
 		Route::put(':id', 'v1.Tag/update')->action_name('标签管理-更新标签')->middleware(Permission::class);
 		Route::delete('', 'v1.Tag/delete')->action_name('标签管理-删除标签')->middleware(Permission::class);
-
 	});
 
 	//内容系统
