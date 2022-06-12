@@ -53,6 +53,11 @@ export const apiUserUpdate = data => {
 	return axios.put('/user/update', data)
 }
 
+//重置密码
+export const apiPasswordReset = data => {
+	return axios.put('/user/password-reset', data)
+}
+
 //修改当前用户邮箱
 export const apiEmailUpdate = data => {
 	return axios.put('/user/email-modify', data)

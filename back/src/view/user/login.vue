@@ -11,6 +11,8 @@
 				</div>
 				<div class="bototom">
 					<el-button type="primary" class="login-btn" @click="login">登录</el-button>
+					<el-button type="text" class="login-btn" @click="$router.push('/password-reset')">忘记密码</el-button>
+
 				</div>
 			</template>
 			<div class="status js2-text-center" v-else>

@@ -5,7 +5,7 @@
 			<aside v-if="user" class="aside js2-scroll-wrap">
 				<Sidebar></Sidebar>
 			</aside>
-			<div class="router-view js2-scroll-wrap" v-if="$route.name=='login'?true:user">
+			<div class="router-view js2-scroll-wrap">
 				<!-- <h2 class="page-title">{{ $route.meta.title }}</h2> -->
 				<keep-alive>
 					<router-view v-if="$route.meta.keep_alive"></router-view>

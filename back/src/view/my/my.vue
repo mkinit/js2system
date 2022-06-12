@@ -88,23 +88,24 @@ export default {
 			})
 		},
 		save() {
+			const {user_info,password_old,password_new,password_new_confirm} = this
 			const data = {
-				nickname: this.user_info.nickname
+				nickname:user_info.nickname
 			}
-			if (this.password_old) {
-				if (!this.password_new || !this.password_new_confirm) {
+			if (password_old) {
+				if (!password_new || !password_new_confirm) {
 					return this.$message.warning('请输入新密码和确认密码')
 				}
-				if (this.password_new !== this.password_new_confirm) {
+				if (password_new !== password_new_confirm) {
 					return this.$message.warning('新密码和确认密码不一致')
 				}
-				data.password_old = this.password_old
-				data.password_new = this.password_new
+				data.password_old = password_old
+				data.password_new = password_new
 			}
 			apiUserUpdate(data).then(res => {
-				this.$message.success('保存成功')
+				password_old?this.$message.success('保存成功，下次登录使用新密码'):this.$message.success('保存成功')
 				this.password_old = this.password_new = this.password_new_confirm = ''
-				const data = Object.assign(this.user_info, res.data)
+				const data = Object.assign(user_info, res.data)
 				this.user_info = data
 				this.update({ key: 'user', data })
 			})

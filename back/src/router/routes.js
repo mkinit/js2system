@@ -170,6 +170,15 @@ export default [{
 		},
 	},
 	{
+		//重置密码
+		name: 'password-reset',
+		path: '/password-reset',
+		component: () => import('../view/user/password-reset'),
+		meta: {
+			title: '重置密码',
+		},
+	},
+	{
 		//角色管理
 		name: 'role',
 		path: '/role',
