@@ -8,7 +8,7 @@ axios.defaults.baseURL = dev ? '' : config.api_url
 import { Message, Loading } from 'element-ui'
 let loadingInstance
 
-//import logout from '@/common/logout.js'
+import logout from '@/common/logout.js'
 
 //请求拦截
 axios.interceptors.request.use(
@@ -39,7 +39,7 @@ axios.interceptors.response.use(
 		switch (status) {
 			case 401:
 				Message.error(msg)
-				//logout()
+				logout()
 				break
 			default:
 				Message.error(msg)

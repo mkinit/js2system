@@ -37,7 +37,6 @@ class Api {
 				$this->user = $user;
 			}
 		}
-
 	}
 
 	//系统设置信息
