@@ -38,7 +38,7 @@ axios.interceptors.response.use(
 		const msg = status == 500 ? '服务器错误' : fail.response.data.msg
 		switch (status) {
 			case 401:
-				Message.error(msg)
+				Message.error('身份验证过期，请重新登录！')
 				logout()
 				break
 			default:
