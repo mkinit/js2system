@@ -7,11 +7,11 @@
 		<div class="item">
 			<span class="title">邮箱：</span>
 			<el-input v-model="user_info.email" disabled></el-input>
+			<el-button type="text" class="tip" @click="dialog_email=true">修改邮箱</el-button>
 		</div>
 		<div class="item">
 			<span class="title">昵称：</span>
 			<el-input v-model="user.nickname"></el-input>
-			<el-button type="text" class="tip" @click="dialog_email=true">修改邮箱</el-button>
 		</div>
 		<div class="item">
 			<span class="title">原密码：</span>
