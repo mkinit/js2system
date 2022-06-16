@@ -146,23 +146,9 @@ class User extends Api {
 			return $this->response(null, '请先获取验证码', 400);
 		}
 
-		$session_code = session('verify_code');
-		$session_code_time = session('verify_code_time');
-		$session_email = session('verify_email');
-
-		if ($session_email != $email) {
-			return $this->response(null, '当前电子邮箱与接收验证码的邮箱不匹配', 400);
-		}
-
-		if ((time() - $session_code_time) > 3000) {
-			session('verify_code', null);
-			session('verify_email', null);
-			session('verify_code_time', null);
-			return $this->response(null, '验证码已过期', 400);
-		}
-
-		if ($session_code != $verify_code) {
-			return $this->response(null, '验证码错误', 400);
+		$checkVerifyCodeResult = $this->checkVerifyCode($email, $verify_code);
+		if ($checkVerifyCodeResult !== true) {
+			return $this->response(null, $checkVerifyCodeResult, 400);
 		}
 
 		//创建用户
@@ -314,23 +300,9 @@ class User extends Api {
 			return $this->response(null, '请先获取验证码', 400);
 		}
 
-		$session_code = session('verify_code');
-		$session_code_time = session('verify_code_time');
-		$session_email = session('verify_email');
-
-		if ($session_email != $email) {
-			return $this->response(null, '当前电子邮箱与接收验证码的邮箱不匹配', 400);
-		}
-
-		if ((time() - $session_code_time) > 3000) {
-			session('verify_code', null);
-			session('verify_email', null);
-			session('verify_code_time', null);
-			return $this->response(null, '验证码已过期', 400);
-		}
-
-		if ($session_code != $verify_code) {
-			return $this->response(null, '验证码错误', 400);
+		$checkVerifyCodeResult = $this->checkVerifyCode($email, $verify_code);
+		if ($checkVerifyCodeResult !== true) {
+			return $this->response(null, $checkVerifyCodeResult, 400);
 		}
 
 		$user->email = $email;
@@ -369,29 +341,40 @@ class User extends Api {
 			return $this->response(null, '该邮箱用户不存在', 400);
 		}
 
-		$session_code = session('verify_code');
-		$session_code_time = session('verify_code_time');
-		$session_email = session('verify_email');
-
-		if ($session_email != $email) {
-			return $this->response(null, '当前电子邮箱与接收验证码的邮箱不匹配', 400);
-		}
-
-		if ((time() - $session_code_time) > 3000) {
-			session('verify_code', null);
-			session('verify_email', null);
-			session('verify_code_time', null);
-			return $this->response(null, '验证码已过期', 400);
-		}
-
-		if ($session_code != $verify_code) {
-			return $this->response(null, '验证码错误', 400);
+		$checkVerifyCodeResult = $this->checkVerifyCode($email, $verify_code);
+		if ($checkVerifyCodeResult !== true) {
+			return $this->response(null, $checkVerifyCodeResult, 400);
 		}
 
 		$user->password = md5($password);
 		$user->save();
 		return $this->response();
 
+	}
+
+	//统一验证函数
+	public function checkVerifyCode($email, $verify_code) {
+		$session_code = session('verify_code');
+		$session_code_time = session('verify_code_time');
+		$session_email = session('verify_email');
+
+		if ($session_email != $email) {
+			return '当前电子邮箱与接收验证码的邮箱不匹配';
+		}
+
+		if ((time() - $session_code_time) > 3000) {
+			return '验证码已过期，请重新获取验证码';
+		}
+
+		if ($session_code != $verify_code) {
+			return '验证码错误';
+		}
+
+		session('verify_code', null);
+		session('verify_email', null);
+		session('verify_code_time', null);
+
+		return true;
 	}
 
 }
