@@ -10,7 +10,6 @@ use app\common\model\Tag as TagModel;
 use app\common\Tools;
 use app\common\validate\Post as PostValidate;
 use think\exception\ValidateException;
-use think\Request;
 
 class Post extends Api {
 	/*
@@ -126,7 +125,7 @@ class Post extends Api {
 		$post->content = $content;
 		$post->thumbnail = $thumbnail;
 		$post->category_id = $category_id;
-		$post->author_id = $this->request->user['id'];
+		$post->author_id = $this->user['id'];
 
 		if ($time_add) {
 			$post->time_add = $time_add;
