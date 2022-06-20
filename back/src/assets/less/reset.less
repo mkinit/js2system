@@ -131,3 +131,18 @@ select {
 fieldset {
 	border: 1px solid @bg-second;
 }
+
+// 设置滚动条样式
+::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+::-webkit-scrollbar-track {
+	background-color: @bg-second;
+}
+
+//设置滑块样式
+::-webkit-scrollbar-thumb {
+    background-color: @border;
+    border-radius: 4px;
+}

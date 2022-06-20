@@ -519,5 +519,9 @@ export default {
 			z-index: 10;
 		}
 	}
+
+	.tox-tinymce{
+		border-radius:4px;
+	}
 }
 </style>
