@@ -6,6 +6,13 @@
 				<el-input size="medium" placeholder="添加标题" v-model="post.title"></el-input>
 			</div>
 			<tinymce ref="editor" v-model="post.content" :init="editor_init" :tinymce-script-src="tinymce_script_src" />
+			<div class="gallery">
+				<div class="thumb" v-for="(item,index) in post.gallery" :key="index">
+					<img :src="base_url+item" />
+					<el-button type="danger" icon="el-icon-delete" circle @click="post.gallery.splice(index,1)"></el-button>
+				</div>
+				<i v-if="post.gallery.length<5" class="el-icon-plus gallery-add" @click="openMedia('gallery')"></i>
+			</div>
 			<div class="custom-meta">
 				<el-button @click="metaAdd">添加自定义属性</el-button>
 				<div class="meta-list">
@@ -35,7 +42,7 @@
 			<div class="section-block thumbnail-box">
 				<h3>缩略图</h3>
 				<div class="thumb">
-					<img v-if="post.thumbnail" :src="base_url+post.thumbnail" />
+					<img v-show="post.thumbnail" :src="base_url+post.thumbnail" />
 					<el-button type="danger" icon="el-icon-delete" circle @click="post.thumbnail=''"></el-button>
 				</div>
 				<el-button class="thumb-upload-btn" @click="openMedia('thumb')">选择缩略图</el-button>
@@ -43,7 +50,7 @@
 			<div class="section-block cover-box" v-if="post.type!='post'">
 				<h3>顶部封面图</h3>
 				<div class="thumb">
-					<img v-if="post.cover" :src="base_url+post.cover" />
+					<img v-show="post.cover" :src="base_url+post.cover" />
 					<el-button type="danger" icon="el-icon-delete" circle @click="post.cover=''"></el-button>
 				</div>
 				<el-button class="thumb-upload-btn" @click="openMedia('cover')">选择封面图</el-button>
@@ -96,6 +103,8 @@ const post_data = {
 	title: '',
 	content: '',
 	thumbnail: '',
+	cover: '',
+	gallery: [],
 	meta: [], //自定义字段
 	tags: [], //标签
 	category_id: '', //当前选择的内容分类ID
@@ -218,6 +227,17 @@ export default {
 					this.$message.error('请选择图片类型文件'):
 						this.post.thumbnail = data[0].thumbnail_small
 					break
+				case 'gallery':
+					data.forEach((item, index) => {
+						if (item.type != 'image') {
+							this.$message.error('请选择图片类型文件')
+						} else {
+							if (index < 6 - this.post.gallery.length) {
+								this.post.gallery.push(item.thumbnail_small)
+							}
+						}
+					})
+					break
 				case 'cover':
 					(data[0].type != 'image') ?
 					this.$message.error('请选择图片类型文件'):
@@ -241,7 +261,6 @@ export default {
 								break
 						}
 						this.editor.insertContent(html)
-
 					})
 					break
 			}
@@ -446,15 +465,35 @@ export default {
 					width: 60%;
 				}
 
-				.el-icon-sort{
+				.el-icon-sort {
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					font-size:1.25em;
-					margin-right:.5em;
-					cursor:move;
+					font-size: 1.25em;
+					margin-right: .5em;
+					cursor: move;
 				}
 			}
+		}
+	}
+
+	.gallery{
+		margin-top:1em;
+
+		.thumb{
+			display: inline-block;
+			width:19.2%;
+			margin-right:1%;
+			img{
+				margin-bottom:0;
+			}
+			&:last-child{
+				margin-right:0;
+			}
+		}
+		.gallery-add{
+			border:1px solid @border;
+			padding:2em;
 		}
 	}
 
@@ -485,15 +524,16 @@ export default {
 		overflow-y: auto;
 		border: 1px solid @border;
 		font-size: .875em;
-		border-top:none;
+		border-top: none;
 		border-radius: 4px;
 	}
 
 	.category-add {
 		display: flex;
-		.el-cascader{
-			line-height:28px;
-			margin-right:1em;
+
+		.el-cascader {
+			line-height: 28px;
+			margin-right: 1em;
 		}
 	}
 
@@ -520,8 +560,8 @@ export default {
 		}
 	}
 
-	.tox-tinymce{
-		border-radius:4px;
+	.tox-tinymce {
+		border-radius: 4px;
 	}
 }
 </style>

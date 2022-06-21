@@ -49,6 +49,11 @@ class Post extends Api {
 
 		foreach ($posts as $post) {
 			$post->content = strip_tags($post->content);
+			if ($post->gallery) {
+				$post->gallery = explode(',', $post->gallery);
+			} else {
+				$post->gallery = [];
+			}
 		}
 
 		$total = 0;
@@ -73,6 +78,11 @@ class Post extends Api {
 		$post = PostModel::with(['author', 'meta', 'tags', 'category'])->where('id', $id)->find();
 		if ($post) {
 			PostModel::update(['view' => $post['view'] + 1], ['id' => $id]);
+			if ($post->gallery) {
+				$post->gallery = explode(',', $post->gallery);
+			} else {
+				$post->gallery = [];
+			}
 			return $this->response($post);
 		} else {
 			return $this->response(null, '没有这条数据', 404);
@@ -86,13 +96,14 @@ class Post extends Api {
 		@param	$type			String		类型 post | single 默认为post
 		@param	$content		String		内容
 		@param	$thumbnail		String		缩略图地址
+		@param	$gallery		Array		图集地址
 		@param	$cover			String		页面顶部封面图片地址
 		@param	$top			0 | 1		置顶
 		@param	$time_add		DATETIME	日期时间（2022-13-14 20:13:14）
 		@param	$meta			Array		自定义属性
 		@param	$tags			Array		标签
 	*/
-	public function add($title = '', $category_id = 0, $type = 'post', $content = '', $thumbnail = '', $cover = '', $top = 0, $time_add = null, $meta = null, $tags = null) {
+	public function add($title = '', $category_id = 0, $type = 'post', $content = '', $thumbnail = '', $gallery = [], $cover = '', $top = 0, $time_add = null, $meta = null, $tags = null) {
 
 		try {
 			validate(PostValidate::class)->check([
@@ -124,6 +135,7 @@ class Post extends Api {
 		$post->cover = $cover;
 		$post->content = $content;
 		$post->thumbnail = $thumbnail;
+		$post->gallery = implode(',', $gallery);
 		$post->category_id = $category_id;
 		$post->author_id = $this->user['id'];
 
@@ -179,13 +191,14 @@ class Post extends Api {
 		@param	$type			String		类型 post | single 默认为post
 		@param	$content		String		内容
 		@param	$thumbnail		String		缩略图地址
+		@param	$gallery		Array		图集地址
 		@param	$cover			String		页面顶部封面图片地址
 		@param	$top			0 | 1		置顶
 		@param	$time_add		DATETIME	日期时间（2022-13-14 20:13:14）
 		@param	$meta			Array		自定义属性
 		@param	$tags			Array		标签
 	*/
-	public function update($id, $title = '', $category_id = 0, $type = 'post', $content = '', $thumbnail = '', $cover = '', $top = 0, $time_add = null, $meta = null, $tags = null) {
+	public function update($id, $title = '', $category_id = 0, $type = 'post', $content = '', $thumbnail = '', $gallery = [], $cover = '', $top = 0, $time_add = null, $meta = null, $tags = null) {
 		$post = PostModel::find($id);
 		if (!$post) {
 			return $this->response(null, '没有该内容', 404);
@@ -219,6 +232,7 @@ class Post extends Api {
 		$post->cover = $cover;
 		$post->content = $content;
 		$post->thumbnail = $thumbnail;
+		$post->gallery = implode(',', $gallery);
 		$post->category_id = $category_id;
 
 		$result = $post->save();

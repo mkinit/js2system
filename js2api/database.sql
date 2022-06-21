@@ -94,14 +94,14 @@ CREATE TABLE IF NOT EXISTS `js2system_category` (
 DELETE FROM `js2system_category`;
 /*!40000 ALTER TABLE `js2system_category` DISABLE KEYS */;
 INSERT INTO `js2system_category` (`id`, `name`, `parent_id`, `keywords`, `description`, `cover`) VALUES
-	(1, 'windows', 0, '', '操作系统相关内容', '/static/images/category-cover.jpg'),
-	(2, '前端笔记', 0, '', '记录前端开发相关的一切', '/static/images/category-cover.jpg'),
-	(3, 'javascript', 2, '', '记录javascript相关的一切', '/static/images/category-cover.jpg'),
-	(4, 'css', 2, '', '记录css相关的一切', '/static/images/category-cover.jpg'),
-	(5, '开发工具', 0, '', '记录开发相关的一切', '/static/images/category-cover.jpg'),
-	(6, 'vue', 2, '', '记录vue相关的一切', '/static/images/category-cover.jpg'),
-	(7, '后端笔记', 0, '', '记录后端开发相关的一切', ''),
-	(8, 'php', 7, '', '记录php开发相关的一切', '');
+	(1, 'windows', 0, '', '操作系统相关内容', '/static/images/cover-placeholder.jpg'),
+	(2, '前端笔记', 0, '', '记录前端开发相关的一切', '/static/images/cover-placeholder.jpg'),
+	(3, 'javascript', 2, '', '记录javascript相关的一切', '/static/images/cover-placeholder.jpg'),
+	(4, 'css', 2, '', '记录css相关的一切', '/static/images/cover-placeholder.jpg'),
+	(5, '开发工具', 0, '', '记录开发相关的一切', '/static/images/cover-placeholder.jpg'),
+	(6, 'vue', 2, '', '记录vue相关的一切', '/static/images/cover-placeholder.jpg'),
+	(7, '后端笔记', 0, '', '记录后端开发相关的一切', '/static/images/cover-placeholder.jpg'),
+	(8, 'php', 7, '', '记录php开发相关的一切', '/static/images/cover-placeholder.jpg');
 /*!40000 ALTER TABLE `js2system_category` ENABLE KEYS */;
 
 -- 导出  表 js2system.js2system_comment 结构
@@ -393,6 +393,7 @@ CREATE TABLE IF NOT EXISTS `js2system_post` (
   `author_id` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '作者ID',
   `category_id` char(50) COLLATE utf8_unicode_ci NOT NULL DEFAULT '0' COMMENT '分类ID，英文逗号分隔',
   `thumbnail` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '缩略图',
+  `gallery` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cover` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '页面顶部封面',
   `view` int(10) NOT NULL DEFAULT '0' COMMENT '浏览次数',
   `top` tinyint(1) NOT NULL DEFAULT '0' COMMENT '置顶',
@@ -401,15 +402,15 @@ CREATE TABLE IF NOT EXISTS `js2system_post` (
   `time_delete` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`),
   KEY `key` (`title`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章表';
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='文章表';
 
 -- 正在导出表  js2system.js2system_post 的数据：3 rows
 DELETE FROM `js2system_post`;
 /*!40000 ALTER TABLE `js2system_post` DISABLE KEYS */;
-INSERT INTO `js2system_post` (`id`, `title`, `content`, `type`, `author_id`, `category_id`, `thumbnail`, `cover`, `view`, `top`, `time_add`, `time_modify`, `time_delete`) VALUES
-	(1, '留言页面', '', 'single', 1, '0', '', NULL, 152, 0, '2021-05-02 22:52:28', '2022-06-05 19:26:16', NULL),
-	(2, '联系我们', '<p>电子邮箱：im@mkinit.com</p>', 'single', 1, '0', '', NULL, 14, 0, '2021-05-03 23:59:32', '2022-03-11 16:24:36', NULL),
-	(3, '关于……', '<p>个人博客是在学习ThinkPHP6和NUXT时开发的系统；</p>\n<p>后台基于vue2、element-ui前后端分离的模式；</p>\n<p>前台有传统的后端渲染（模板）和基于node.js的后端渲染NUXT框架（SSR）两种模式。</p>\n<p>基本功能包括：系统设置、菜单、分类、内容（标签、自定义字段、评论）、链接、文件、用户、角色权限等模块，已完善的有60个增删改查数据接口；</p>\n<p>部分功能参考了wordpress，比如文章的标签、自定义字段、媒体库。</p>\n<p><img src="https://im.mkinit.com/upload/20220309160504-1_900.png" alt="/upload/20220309160504-1.png" data-origin="https://im.mkinit.com/upload/20220309160504-1.png" /><img src="https://im.mkinit.com/upload/20220309160453-1_900.png" alt="/upload/20220309160453-1.png" data-origin="https://im.mkinit.com/upload/20220309160453-1.png" /><img src="https://im.mkinit.com/upload/20220309160443-1_900.png" alt="/upload/20220309160443-1.png" data-origin="https://im.mkinit.com/upload/20220309160443-1.png" /><img src="https://im.mkinit.com/upload/20220309160423-1_900.png" alt="/upload/20220309160423-1.png" data-origin="https://im.mkinit.com/upload/20220309160423-1.png" /><img src="https://im.mkinit.com/upload/20220309160656-2_900.png" alt="/upload/20220309160656-2.png" data-origin="https://im.mkinit.com/upload/20220309160656-2.png" /><img src="https://im.mkinit.com/upload/20220309160656-1_900.png" alt="/upload/20220309160656-1.png" data-origin="https://im.mkinit.com/upload/20220309160656-1.png" /><img src="https://im.mkinit.com/upload/20220309161334-1_900.png" alt="/upload/20220309161334-1.png" data-origin="https://im.mkinit.com/upload/20220309161334-1.png" /></p>', 'single', 1, '0', '', NULL, 50, 0, '2021-08-16 23:04:43', '2022-06-05 19:07:28', NULL);
+INSERT INTO `js2system_post` (`id`, `title`, `content`, `type`, `author_id`, `category_id`, `thumbnail`, `gallery`, `cover`, `view`, `top`, `time_add`, `time_modify`, `time_delete`) VALUES
+	(1, '留言页面', '', 'single', 1, '0', '', NULL, NULL, 154, 0, '2021-05-02 22:52:28', '2022-06-14 22:42:38', NULL),
+	(2, '联系我们', '<p>电子邮箱：im@mkinit.com</p>', 'single', 1, '0', '', NULL, NULL, 14, 0, '2021-05-03 23:59:32', '2022-03-11 16:24:36', NULL),
+	(3, '关于……', '<p>个人博客是在学习ThinkPHP6和NUXT时开发的系统；</p>\n<p>后台基于vue2、element-ui前后端分离的模式；</p>\n<p>前台有传统的后端渲染（模板）和基于node.js的后端渲染NUXT框架（SSR）两种模式。</p>\n<p>基本功能包括：系统设置、菜单、分类、内容（标签、自定义字段、评论）、链接、文件、用户、角色权限等模块，已完善的有60个增删改查数据接口；</p>\n<p>部分功能参考了wordpress，比如文章的标签、自定义字段、媒体库。</p>\n<p><img src="https://im.mkinit.com/upload/20220309160504-1_900.png" alt="/upload/20220309160504-1.png" data-origin="https://im.mkinit.com/upload/20220309160504-1.png" /><img src="https://im.mkinit.com/upload/20220309160453-1_900.png" alt="/upload/20220309160453-1.png" data-origin="https://im.mkinit.com/upload/20220309160453-1.png" /><img src="https://im.mkinit.com/upload/20220309160443-1_900.png" alt="/upload/20220309160443-1.png" data-origin="https://im.mkinit.com/upload/20220309160443-1.png" /><img src="https://im.mkinit.com/upload/20220309160423-1_900.png" alt="/upload/20220309160423-1.png" data-origin="https://im.mkinit.com/upload/20220309160423-1.png" /><img src="https://im.mkinit.com/upload/20220309160656-2_900.png" alt="/upload/20220309160656-2.png" data-origin="https://im.mkinit.com/upload/20220309160656-2.png" /><img src="https://im.mkinit.com/upload/20220309160656-1_900.png" alt="/upload/20220309160656-1.png" data-origin="https://im.mkinit.com/upload/20220309160656-1.png" /><img src="https://im.mkinit.com/upload/20220309161334-1_900.png" alt="/upload/20220309161334-1.png" data-origin="https://im.mkinit.com/upload/20220309161334-1.png" /></p>', 'single', 1, '0', '', NULL, NULL, 51, 0, '2021-08-16 23:04:43', '2022-06-14 20:35:13', NULL);
 /*!40000 ALTER TABLE `js2system_post` ENABLE KEYS */;
 
 -- 导出  表 js2system.js2system_post_tag 结构
@@ -959,8 +960,8 @@ CREATE TABLE IF NOT EXISTS `js2system_user` (
 DELETE FROM `js2system_user`;
 /*!40000 ALTER TABLE `js2system_user` DISABLE KEYS */;
 INSERT INTO `js2system_user` (`id`, `username`, `password`, `nickname`, `avatar`, `email`, `phone`, `time_add`, `role_id`, `time_delete`) VALUES
-	(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'nickname', NULL, 'im@mkinit.com', '13800138000', '1990-02-08 00:00:00', 1, NULL),
-	(2, 'mkinit', 'e10adc3949ba59abbe56e057f20f883e', 'mkinit', NULL, 'layso@qq.com', '13800138001', '2021-11-26 15:40:51', 2, NULL);
+	(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', NULL, 'im@mkinit.com', '13800138000', '1990-02-08 00:00:00', 1, NULL),
+	(2, 'mkinit', 'e10adc3949ba59abbe56e057f20f883e', 'mkinit', NULL, 'im3@mkinit.com', '13800138001', '2021-11-26 15:40:51', 2, NULL);
 /*!40000 ALTER TABLE `js2system_user` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
