@@ -452,6 +452,7 @@ export default {
 		margin-top: 1em;
 
 		.meta-list {
+			width:60%;
 			.item {
 				display: flex;
 				justify-content: space-between;
