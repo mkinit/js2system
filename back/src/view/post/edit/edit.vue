@@ -228,11 +228,11 @@ export default {
 						this.post.thumbnail = data[0].thumbnail_small
 					break
 				case 'gallery':
-					data.forEach((item, index) => {
+					data.forEach(item => {
 						if (item.type != 'image') {
 							this.$message.error('请选择图片类型文件')
 						} else {
-							if (index < 6 - this.post.gallery.length) {
+							if (this.post.gallery.length < 5) {
 								this.post.gallery.push(item.thumbnail_small)
 							}
 						}
@@ -452,7 +452,8 @@ export default {
 		margin-top: 1em;
 
 		.meta-list {
-			width:60%;
+			width: 60%;
+
 			.item {
 				display: flex;
 				justify-content: space-between;
@@ -478,23 +479,26 @@ export default {
 		}
 	}
 
-	.gallery{
-		margin-top:1em;
+	.gallery {
+		margin-top: 1em;
 
-		.thumb{
+		.thumb {
 			display: inline-block;
-			width:19.2%;
-			margin-right:1%;
-			img{
-				margin-bottom:0;
+			width: 19.2%;
+			margin-right: 1%;
+
+			img {
+				margin-bottom: 0;
 			}
-			&:last-child{
-				margin-right:0;
+
+			&:last-child {
+				margin-right: 0;
 			}
 		}
-		.gallery-add{
-			border:1px solid @border;
-			padding:2em;
+
+		.gallery-add {
+			border: 1px solid @border;
+			padding: 2em;
 		}
 	}
 
