@@ -21,7 +21,7 @@
 						<i class="el-icon-sort"></i>
 						<el-autocomplete class="meta-key" v-model="meta.key" :fetch-suggestions="queryMetaKey" placeholder="请输入内容"></el-autocomplete>
 						<el-input class="meta-value" v-model="meta.value" placeholder="属性值"></el-input>
-						<el-button type="danger" size="mini" @click="metaDelete(index)">删除</el-button>
+						<el-button class="meta-del-btn" type="danger" size="mini" @click="metaDelete(index)">删除</el-button>
 					</div>
 				</div>
 			</div>
@@ -279,7 +279,12 @@ export default {
 				key: '',
 				value: ''
 			})
-			Sortable.create(document.querySelector('.meta-list'))
+			this.dragSortStart()
+		},
+
+		//开启拖拽排序
+		dragSortStart(){
+			Sortable.create(document.querySelector('.meta-list'),{handle: '.el-icon-sort'})
 		},
 
 		//删除自定义属性
@@ -318,6 +323,10 @@ export default {
 						})
 					}
 
+					if(res.data.meta.length){
+						this.dragSortStart()
+					}
+
 				})
 			} else {
 				this.is_edit = false
@@ -331,6 +340,10 @@ export default {
 						this.$refs['cate-tree'].setCheckedKeys([])
 					})
 				}
+
+				if(post.meta.length){
+						this.dragSortStart()
+					}
 			}
 			this.$forceUpdate()
 		},
