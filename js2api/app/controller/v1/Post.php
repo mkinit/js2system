@@ -75,7 +75,7 @@ class Post extends Api {
 		@param $id 内容ID
 	*/
 	public function read($id) {
-		$post = PostModel::with(['author', 'meta', 'tags', 'category'])->where('id', $id)->find();
+		$post = PostModel::with(['author', 'meta' => function ($query) {$query->order('id', 'asc');}, 'tags', 'category'])->where('id', $id)->find();
 		if ($post) {
 			PostModel::update(['view' => $post['view'] + 1], ['id' => $id]);
 			if ($post->gallery) {

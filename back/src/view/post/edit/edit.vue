@@ -284,7 +284,9 @@ export default {
 
 		//开启拖拽排序
 		dragSortStart(){
-			Sortable.create(document.querySelector('.meta-list'),{handle: '.el-icon-sort'})
+			this.$nextTick(()=>{
+				Sortable.create(document.querySelector('.meta-list'),{handle: '.el-icon-sort'})
+			})
 		},
 
 		//删除自定义属性
