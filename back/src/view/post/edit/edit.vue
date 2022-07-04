@@ -7,6 +7,7 @@
 			</div>
 			<tinymce ref="editor" v-model="post.content" :init="editor_init" :tinymce-script-src="tinymce_script_src" />
 			<div class="gallery">
+				<h4 class="title">图集</h4>
 				<div class="thumb" v-for="(item,index) in post.gallery" :key="index">
 					<img :src="base_url+item" />
 					<el-button type="danger" icon="el-icon-delete" circle @click="post.gallery.splice(index,1)"></el-button>
@@ -27,12 +28,12 @@
 		</div>
 		<div class="post-action js2-box">
 			<div class="section-block">
-				<h3>发布时间</h3>
+				<h4 class="title">发布时间</h4>
 				<el-date-picker class="date-input" value-format="yyyy-MM-dd HH:mm:ss" align="right" v-model="post.time_add" type="datetime" placeholder="选择日期时间">
 				</el-date-picker>
 			</div>
 			<div class="section-block category-box" v-if="post.type=='post'">
-				<h3>选择分类</h3>
+				<h4 class="title">选择分类</h4>
 				<el-input class="cate-filter-text" placeholder="搜索分类" v-model="cate_filter_text">
 				</el-input>
 				<el-tree @check="categoryTreeCheck" class="category-tree" :filter-node-method="cateFilter" ref="cate-tree" :data="categories" node-key="id" :props="{label:'name'}" :expand-on-click-node="false" :default-expand-all="true" :check-on-click-node="true" :accordion="false" :show-checkbox="true" :check-strictly="true">
@@ -40,7 +41,7 @@
 				<el-button type="text" @click="dialog_category=true">添加新分类</el-button>
 			</div>
 			<div class="section-block thumbnail-box">
-				<h3>缩略图</h3>
+				<h4 class="title">缩略图</h4>
 				<div class="thumb">
 					<img v-show="post.thumbnail" :src="base_url+post.thumbnail" />
 					<el-button type="danger" icon="el-icon-delete" circle @click="post.thumbnail=''"></el-button>
@@ -48,7 +49,7 @@
 				<el-button class="thumb-upload-btn" @click="openMedia('thumb')">选择缩略图</el-button>
 			</div>
 			<div class="section-block cover-box" v-if="post.type!='post'">
-				<h3>顶部封面图</h3>
+				<h4 class="title">顶部封面图</h4>
 				<div class="thumb">
 					<img v-show="post.cover" :src="base_url+post.cover" />
 					<el-button type="danger" icon="el-icon-delete" circle @click="post.cover=''"></el-button>
@@ -56,7 +57,7 @@
 				<el-button class="thumb-upload-btn" @click="openMedia('cover')">选择封面图</el-button>
 			</div>
 			<div class="section-block" v-if="post.type!='single'">
-				<h3>内容标签</h3>
+				<h4 class="title">内容标签</h4>
 				<el-tag :key="tag" v-for="tag in post.tags" closable :disable-transitions="false" @close="tagDelete(tag)">
 					{{tag}}
 				</el-tag>
@@ -450,8 +451,12 @@ export default {
 
 	.custom-meta {
 		margin-top: 1em;
+		border:1px solid @border;
+		border-radius:4px;
+		padding:1em;
 
 		.meta-list {
+			min-width: 520px;
 			width: 60%;
 
 			.item {
@@ -481,6 +486,13 @@ export default {
 
 	.gallery {
 		margin-top: 1em;
+		border:1px solid @border;
+		border-radius:4px;
+		padding:1em;
+
+		.title{
+			margin-bottom:.5em;
+		}
 
 		.thumb {
 			display: inline-block;
@@ -498,7 +510,11 @@ export default {
 
 		.gallery-add {
 			border: 1px solid @border;
-			padding: 2em;
+			padding: 1em;
+			cursor: pointer;
+			&:hover{
+				color:@link;
+			}
 		}
 	}
 
@@ -513,14 +529,17 @@ export default {
 	.section-block {
 		margin-bottom: 2em;
 
-		h3 {
+		.title {
 			margin-bottom: .5em;
 		}
 	}
 
 	.cate-filter-text {
+
 		input {
 			font-size: 1em;
+			border-bottom-left-radius:0;
+			border-bottom-right-radius:0;
 		}
 	}
 
@@ -530,7 +549,8 @@ export default {
 		border: 1px solid @border;
 		font-size: .875em;
 		border-top: none;
-		border-radius: 4px;
+		border-bottom-left-radius: 4px;
+		border-bottom-right-radius: 4px;
 	}
 
 	.category-add {
