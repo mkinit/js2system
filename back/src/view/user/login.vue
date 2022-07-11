@@ -1,6 +1,6 @@
 <template>
 	<div class="v-login">
-		<div class="login-box js2-box">
+		<div class="login-box js2-box js2-box-shadow">
 			<div class="login-title">JS2-SYSTEM</div>
 			<template v-if="!user">
 				<div class="item">
@@ -68,7 +68,6 @@ export default {
 		margin: 15vh auto 0;
 		min-width: 320px;
 		max-width: 375px;
-		box-shadow: 1px 1px 1em @font-second;
 		padding: 1em 2em 2.5em;
 
 		.item {

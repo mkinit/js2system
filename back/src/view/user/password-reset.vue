@@ -1,20 +1,20 @@
 <template>
 	<div class="v-password-reset">
-		<div class="form-box js2-box">
+		<div class="form-box js2-box js2-box-shadow">
 			<div class="session-title">重置密码</div>
 			<el-form label-position="right" ref="password_reset" :model="password_reset" :rules="rules">
-				<el-form-item label-width="7em" label="邮箱：" prop="email" class="email-item">
-					<el-input v-model="password_reset.email"></el-input>
+				<el-form-item prop="email" class="email-item">
+					<el-input v-model="password_reset.email" placeholder="电子邮箱"></el-input>
 					<el-button @click="getVerifyCode">获取验证码</el-button>
 				</el-form-item>
-				<el-form-item label-width="7em" label="验证码：" prop="verify_code">
-					<el-input v-model="password_reset.verify_code"></el-input>
+				<el-form-item prop="verify_code">
+					<el-input v-model="password_reset.verify_code" placeholder="验证码"></el-input>
 				</el-form-item>
-				<el-form-item label-width="7em" label="密码：" prop="password">
-					<el-input type="password" v-model="password_reset.password"></el-input>
+				<el-form-item prop="password">
+					<el-input type="password" v-model="password_reset.password" placeholder="新密码"></el-input>
 				</el-form-item>
-				<el-form-item label-width="7em" label="确认密码：" prop="password_confirm">
-					<el-input type="password" v-model="password_reset.password_confirm"></el-input>
+				<el-form-item prop="password_confirm">
+					<el-input type="password" v-model="password_reset.password_confirm" placeholder="确认密码"></el-input>
 				</el-form-item>
 			</el-form>
 			<div class="bototom">
@@ -82,9 +82,8 @@ export default {
 	.form-box {
 		margin: 15vh auto 0;
 		min-width: 320px;
-		max-width: 420px;
-		box-shadow: 1px 1px 10px @font-second;
-		padding: 1.5em;
+		max-width: 414px;
+		padding: 1.5em 3em 2em;
 
 		.email-item {
 			.el-form-item__content {
@@ -93,13 +92,13 @@ export default {
 		}
 
 		.el-form-item {
-			margin-bottom: 1em;
+			margin-bottom: .5em;
 		}
 	}
 
 	.session-title {
 		font-size: 1.5em;
-		margin-bottom: 0.5em;
+		margin-bottom: 1em;
 		text-align: center;
 	}
 
