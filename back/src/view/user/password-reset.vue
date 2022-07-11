@@ -18,6 +18,7 @@
 				</el-form-item>
 			</el-form>
 			<div class="bototom">
+				<el-button @click="$router.back()">返回登录</el-button>
 				<el-button type="primary" @click="confirm">确定</el-button>
 			</div>
 		</div>
