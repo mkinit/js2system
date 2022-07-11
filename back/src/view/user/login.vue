@@ -67,9 +67,9 @@ export default {
 	.login-box {
 		margin: 15vh auto 0;
 		min-width: 320px;
-		max-width: 360px;
-		box-shadow: 1px 1px 10px @font-second;
-		padding: 1.5em 2em;
+		max-width: 375px;
+		box-shadow: 1px 1px 1em @font-second;
+		padding: 1em 2em 2.5em;
 
 		.item {
 			margin: .5em auto;
@@ -79,7 +79,7 @@ export default {
 
 	.login-title {
 		font-size: 2em;
-		margin-bottom: 0.5em;
+		margin-bottom: 1em;
 		text-align: center;
 	}
 
