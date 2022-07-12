@@ -1,7 +1,7 @@
 <template>
 	<div class="v-role js2-box">
 		<el-table :data="roles" height="81vh">
-			<el-table-column align="center" label="角色编号" prop="id"></el-table-column>
+			<el-table-column align="center" label="角色编号" prop="id" width="100"></el-table-column>
 			<el-table-column align="center" label="角色名称" prop="name"></el-table-column>
 			<el-table-column align="center" label="角色说明" prop="description"></el-table-column>
 			<el-table-column align="center" label="添加时间" prop="time_add"></el-table-column>

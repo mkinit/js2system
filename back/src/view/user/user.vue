@@ -1,7 +1,7 @@
 <template>
 	<div class="v-user js2-box">
 		<el-table :data="users" height="72vh">
-			<el-table-column align="center" label="用户编号" prop="id"></el-table-column>
+			<el-table-column align="center" label="用户编号" prop="id" width="100"></el-table-column>
 			<el-table-column align="center" label="用户名" prop="username"></el-table-column>
 			<el-table-column align="center" label="电子邮箱" prop="email"></el-table-column>
 			<el-table-column align="center" label="用户角色">
